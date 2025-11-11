@@ -71,26 +71,26 @@ The web is saturated with generic, static social question lists. RiffBit's visio
 
 ### Prerequisites
 
--   Node.js ≥ 18
--   npm or yarn
+-   Node.js ≥ 18.0
+-   npm (comes with Node.js)
 -   Expo CLI installed globally (`npm install -g expo-cli`)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/leontutu/RiffBit.git
-cd RiffBit
+git clone https://github.com/leontutu/riffbit.git
+cd riffbit
+npm install
+
+# Test (runs tests for frontend and backend)
+npm run test
 
 # Run Backend (Terminal 1)
-cd server
-npm install
-npm run dev
+npm run dev:server
 
 # Run App     (Terminal 2)
-cd app
-npm install
-npx expo start
+npm run dev:app
 ```
 
 **Note**: If you are using a physical device and expo go, you need ngrok (or a similar solution) to connect to your machine's localhost port the server is listening on (default 3000). For ngrok, run `npx ngrok http 3000`, then set up a `.env` file as outlined in `app/.env.example`.
