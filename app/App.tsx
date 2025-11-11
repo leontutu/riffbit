@@ -1,7 +1,8 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, Pressable, Platform } from "react-native";
+import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
     const DEFAULT_NGROK = process.env.EXPO_PUBLIC_DEFAULT_NGROK || "";
