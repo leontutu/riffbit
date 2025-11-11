@@ -16,6 +16,9 @@
     "scripts": {
         "dev:app": "npm run start --workspace=app",
         "dev:server": "npm run dev --workspace=server",
+        "test": "npm run test:app && npm run test:server",
+        "test:app": "npm run test --workspace=app",
+        "test:server": "npm run test --workspace=server",
         "ngrok": "npx ngrok http 3000"
     }
 }
