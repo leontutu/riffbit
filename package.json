@@ -1,0 +1,21 @@
+{
+    "name": "riffbit-monorepo",
+    "description": "A Multiplatform app for AI generated question prompts.",
+    "version": "0.0.1",
+    "private": true,
+    "author": "leontutu",
+    "license": "UNLICENSED",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "workspaces": [
+        "app",
+        "server",
+        "shared"
+    ],
+    "scripts": {
+        "dev:app": "npm run start --workspace=app",
+        "dev:server": "npm run dev --workspace=server",
+        "ngrok": "npx ngrok http 3000"
+    }
+}
