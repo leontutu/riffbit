@@ -19,6 +19,12 @@
         "test": "npm run test:app && npm run test:server",
         "test:app": "npm run test --workspace=app",
         "test:server": "npm run test --workspace=server",
-        "ngrok": "npx ngrok http 3000"
+        "ngrok": "npx ngrok http 3000",
+        "format": "npx prettier --write ."
+    },
+    "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+        "eslint-config-prettier": "^10.1.8",
+        "prettier": "^3.6.2"
     }
 }
