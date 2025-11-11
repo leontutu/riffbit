@@ -19,6 +19,32 @@
         "test": "npm run test:app && npm run test:server",
         "test:app": "npm run test --workspace=app",
         "test:server": "npm run test --workspace=server",
-        "ngrok": "npx ngrok http 3000"
+        "ngrok": "npx ngrok http 3000",
+        "prepare": "husky",
+        "lint": "eslint . --ext .ts,.tsx",
+        "lint:fix": "eslint . --ext .ts,.tsx --fix",
+        "format": "prettier --check .",
+        "format:fix": "prettier --write ."
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint",
+            "prettier --check"
+        ],
+        "*.json": "prettier --check"
+    },
+    "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^6.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.46.4",
+        "@typescript-eslint/parser": "^8.46.4",
+        "eslint": "^9.39.1",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^7.0.1",
+        "eslint-plugin-react-native": "^5.0.0",
+        "globals": "^16.5.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.6",
+        "prettier": "^3.6.2"
     }
 }

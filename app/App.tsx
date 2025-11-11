@@ -1,7 +1,8 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, View, Image, Pressable, Platform } from "react-native";
+import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
     const DEFAULT_NGROK = process.env.EXPO_PUBLIC_DEFAULT_NGROK || "";
@@ -17,15 +18,16 @@ export default function App() {
             }
             const data = await response.json();
             setResponseMessage(`Server response: ${data.message}`);
-        } catch (error: any) {
-            setResponseMessage(`Connection failed: ${error.message}`);
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : "Unknown error";
+            setResponseMessage(`Connection failed: ${message}`);
         }
     };
 
     return (
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
-                <Image style={styles.image} source={require("./assets/logo.png")} />
+                <Image style={styles.image} source={require("./assets/logo.png") as number} />
                 <View style={styles.connectionContainer}>
                     <Pressable style={styles.materialButton} onPress={testServerConnection}>
                         <Text style={styles.materialButtonText}>Test Server Connection</Text>
