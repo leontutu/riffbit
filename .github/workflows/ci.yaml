@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js and Cache Dependencies
         uses: actions/setup-node@v4
         with:
-          node-version: "20.0.0"
+          node-version: "24.11.0"
           cache: "npm"
 
       - name: Install Dependencies
@@ -28,17 +28,23 @@ jobs:
         run: npm run format
 
       - name: Test Server
-        run: |
-          cd server
-          npm run test
+        working-directory: ./server
+        run: npx vitest run --reporter=verbose
 
-      - name: Build server
-        run: npm run build:server
+      - name: Test Server with Exit Code Logging
+        working-directory: ./server
+        run: |
+          npx vitest run --reporter=verbose
+          echo "Exit code: $?"
+
+      - name: Build Server
+        working-directory: ./server
+        run: npm run build
 
       - name: Test App
-        run: |
-          cd app
-          npm run test
+        working-directory: ./app
+        run: npm test
 
-      - name: Diagnose app
-        run: npm run doctor:app
+      - name: Diagnose App
+        working-directory: ./app
+        run: npm run doctor
