@@ -1,6 +1,6 @@
 import { Application } from "express";
 
-import * as questionRepository from "../repositories/questionRepository";
+import * as questionController from "../controllers/questionController";
 
 /**
  * Question API routes module.
@@ -12,22 +12,12 @@ import * as questionRepository from "../repositories/questionRepository";
  * @param app - The Express application instance
  */
 export function registerQuestionRoutes(app: Application) {
-    app.get("/api/health", (req, res) => {
-        res.json({ message: "🚀 Server is running" });
-    });
-
     /**
      * Route: GET /api/questions
      * Fetches all questions.
      */
     app.get("/api/questions", async (req, res) => {
-        try {
-            const questions = await questionRepository.getAllQuestions();
-            res.json(questions);
-        } catch (error) {
-            console.error("Error fetching all questions:", error);
-            res.status(500).json({ error: "Failed to retrieve questions" });
-        }
+        await questionController.getAllQuestions(req, res);
     });
 
     /**
@@ -35,13 +25,7 @@ export function registerQuestionRoutes(app: Application) {
      * Fetches a single random question.
      */
     app.get("/api/questions/random", async (req, res) => {
-        try {
-            const question = await questionRepository.fetchRandomQuestion();
-            res.json(question);
-        } catch (error) {
-            console.error("Error fetching random question:", error);
-            res.status(500).json({ error: "Failed to retrieve random question" });
-        }
+        await questionController.getRandomQuestion(req, res);
     });
 
     /**
@@ -49,22 +33,6 @@ export function registerQuestionRoutes(app: Application) {
      * Fetches a single question by its ID.
      */
     app.get("/api/questions/:id", async (req, res) => {
-        try {
-            const id = parseInt(req.params.id, 10);
-            if (isNaN(id)) {
-                return res.status(400).json({ error: "Invalid question ID format" });
-            }
-
-            const question = await questionRepository.fetchQuestion(id);
-
-            if (question) {
-                res.json(question);
-            } else {
-                res.status(404).json({ error: `Question with ID ${id} not found` });
-            }
-        } catch (error) {
-            console.error(`Error fetching question ${req.params.id}:`, error);
-            res.status(500).json({ error: "Failed to retrieve question" });
-        }
+        await questionController.getQuestionById(req, res);
     });
 }

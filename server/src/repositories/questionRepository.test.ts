@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { fetchQuestion, fetchRandomQuestion, getAllQuestions } from "./questionRepository";
+import { getAllQuestions, getQuestionById, getRandomQuestion } from "./questionRepository";
 
 describe("questionRepository", () => {
     test("loads all questions from CSV", async () => {
@@ -15,17 +15,17 @@ describe("questionRepository", () => {
     });
 
     test("fetches specific question", async () => {
-        let question = await fetchQuestion(1);
+        let question = await getQuestionById(1);
         expect(question).toBeDefined();
         expect(question!.id).toBe(1);
         expect(question!.text).toBe("What is the meaning of life?");
 
-        question = await fetchQuestion(999);
+        question = await getQuestionById(999);
         expect(question).toBeUndefined();
     });
 
     test("fetches random question", async () => {
-        let question = await fetchRandomQuestion();
+        let question = await getRandomQuestion();
         expect(question).toBeDefined();
         expect(question).toHaveProperty("id");
         expect(question).toHaveProperty("text");
