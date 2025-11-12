@@ -17,12 +17,13 @@ feature/*       ---> (Branches from development)
 Refer to Tags below for feature/* vatrations
 ### Branch Names
 ```
-#issueNo?/tag/descriptive-branch-name
+tag/#issueNo/descriptive-branch-name
 ```
 e. g.
 ```
-#32/feat/add-orm-for-sql-db
+feat/#32/add-orm-for-sql-db
 ```
+Omit #issueNo for quick fix/refactor branches with no attached issue 
 ### Commit messages
 ```
 tag: Descriptive title in sentence case
@@ -41,11 +42,11 @@ Adds an example commit message to the docs to serve as a
 reference for a good commit message.
 
 - Add commit message
-    - Show good title format
-    - Show good body format
+    - Ensure good title format
+    - Ensure good body format
 - Add second item to bulleted list for presentation purpose
 ```
-
+Description and bulleted list can be omitted for small changes.
 ### Tags
 The following tags are valid for commit messages and branch names:
 ```
@@ -57,7 +58,21 @@ The following tags are valid for commit messages and branch names:
 - test:     Testing
 - style:    Formatting
 ```
+
+### Pull Requests
+**Title**
+```
+tag: #issueNo Title that matches branch name
+```
+e.g.:
+```
+feat: #2 Implement ci pipleine
+```
+**Body**
+As in template.
+
+
 ### Merging
-- Squash and commit when merging PRs
+- Merge commit for merging PRs into development 
 - Create merge commit when merging development into main
 - Tag releases on main -> git tag -a v0.1 -m "Release version 0.1"
