@@ -14,17 +14,19 @@
         "shared"
     ],
     "scripts": {
+        "build:server": "npm run build --workspace=server",
+        "doctor:app": "npm run doctor --workspace=app",
         "dev:app": "npm run start --workspace=app",
         "dev:server": "npm run dev --workspace=server",
         "test": "npm run test:app && npm run test:server",
         "test:app": "npm run test --workspace=app",
         "test:server": "npm run test --workspace=server",
-        "ngrok": "npx ngrok http 3000",
-        "prepare": "husky",
         "lint": "eslint . --ext .ts,.tsx",
         "lint:fix": "eslint . --ext .ts,.tsx --fix",
         "format": "prettier --check .",
-        "format:fix": "prettier --write ."
+        "format:fix": "prettier --write .",
+        "prepare": "husky",
+        "ngrok": "npx ngrok http 3000"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [

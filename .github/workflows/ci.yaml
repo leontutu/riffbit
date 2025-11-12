@@ -1,0 +1,40 @@
+name: CI Pipeline
+on:
+  push:
+    branches: [development, main]
+  pull_request:
+    branches: [development, main]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and Cache Dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18.0"
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check Formatting
+        run: npm run format
+
+      - name: Test Server
+        run: npm run test:server
+
+      - name: Build server
+        run: npm run build:server
+
+      - name: Test App
+        run: npm run test:app
+
+      - name: Diagnose app
+        run: npm run doctor:app
