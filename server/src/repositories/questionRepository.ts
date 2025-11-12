@@ -16,7 +16,6 @@ export function getAllQuestions(): Promise<Question[]> {
                 questions.push({ id: parseInt(data[0]), text: data[1] as string })
             )
             .on("end", () => {
-                console.log(`Successfully loaded ${questions.length} questions.`);
                 resolve(questions);
             })
             .on("error", error => {

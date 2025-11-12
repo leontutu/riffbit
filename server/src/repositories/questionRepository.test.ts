@@ -1,10 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import {
-    fetchQuestion,
-    fetchRandomQuestion,
-    getAllQuestions,
-} from "../repository/questionRepository";
+import { fetchQuestion, fetchRandomQuestion, getAllQuestions } from "./questionRepository";
 
 describe("questionRepository", () => {
     test("loads all questions from CSV", async () => {
