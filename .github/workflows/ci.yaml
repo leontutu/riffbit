@@ -31,12 +31,6 @@ jobs:
         working-directory: ./server
         run: npx vitest run --reporter=verbose
 
-      - name: Test Server with Exit Code Logging
-        working-directory: ./server
-        run: |
-          npx vitest run --reporter=verbose
-          echo "Exit code: $?"
-
       - name: Build Server
         working-directory: ./server
         run: npm run build
