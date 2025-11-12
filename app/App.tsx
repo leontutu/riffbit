@@ -7,17 +7,17 @@ import { StatusBar } from "expo-status-bar";
 export default function App() {
     const DEFAULT_NGROK = process.env.EXPO_PUBLIC_DEFAULT_NGROK || "";
     const serverUrl = Platform.OS === "web" ? "http://localhost:3000" : DEFAULT_NGROK;
-    const testEndpoint = "/api/test";
+    const testEndpoint = "/api/questions/random";
     const [responseMessage, setResponseMessage] = useState("Not connected");
 
-    const testServerConnection = async () => {
+    const getRandomQuestion = async () => {
         try {
             const response = await fetch(serverUrl + testEndpoint);
             if (!response.ok) {
                 throw new Error(`Server error: ${response.status}`);
             }
             const data = await response.json();
-            setResponseMessage(`Server response: ${data.message}`);
+            setResponseMessage(`Server response: ${data.text}`);
         } catch (error: unknown) {
             const message = error instanceof Error ? error.message : "Unknown error";
             setResponseMessage(`Connection failed: ${message}`);
@@ -29,7 +29,7 @@ export default function App() {
             <SafeAreaView style={styles.container}>
                 <Image style={styles.image} source={require("./assets/logo.png") as number} />
                 <View style={styles.connectionContainer}>
-                    <Pressable style={styles.materialButton} onPress={testServerConnection}>
+                    <Pressable style={styles.materialButton} onPress={getRandomQuestion}>
                         <Text style={styles.materialButtonText}>Test Server Connection</Text>
                     </Pressable>
                     <Text style={styles.message}>{responseMessage}</Text>
