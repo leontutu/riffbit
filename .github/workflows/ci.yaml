@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js and Cache Dependencies
         uses: actions/setup-node@v4
         with:
-          node-version: "18.0"
+          node-version: "20.0.0"
           cache: "npm"
 
       - name: Install Dependencies
@@ -28,13 +28,17 @@ jobs:
         run: npm run format
 
       - name: Test Server
-        run: npm run test:server
+        run: |
+          cd server
+          npm run test
 
       - name: Build server
         run: npm run build:server
 
       - name: Test App
-        run: npm run test:app
+        run: |
+          cd app
+          npm run test
 
       - name: Diagnose app
         run: npm run doctor:app
