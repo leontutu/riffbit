@@ -11,10 +11,9 @@ import * as questionRepository from "../repositories/questionRepository";
  * Registers all question-related routes on the Express application.
  * @param app - The Express application instance
  */
-
 export function registerQuestionRoutes(app: Application) {
-    app.get("/api/test", (req, res) => {
-        res.json({ message: "🚀 Server is running! Responded " + " times" });
+    app.get("/api/health", (req, res) => {
+        res.json({ message: "🚀 Server is running" });
     });
 
     /**
