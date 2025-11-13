@@ -1,4 +1,4 @@
-import { Question } from "@shared/types";
+import { Question } from "@shared/types/types";
 import parse from "csv-parser";
 import * as fs from "fs";
 

@@ -1,4 +1,4 @@
-import { Question } from "@shared/types";
+import { Question } from "@shared/types/types";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 
 import questionsApiService from "../api/services/questionsApiService";

@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 
-import { Question } from "@shared/types";
+import API_ENDPOINTS from "@shared/constants/apiEndpoints";
+import { Question } from "@shared/types/types";
 
 /**
  * HTTP client for questions API.
@@ -12,7 +13,7 @@ const serverUrl = Platform.OS === "web" ? "http://localhost:3000" : DEFAULT_NGRO
 
 /**
  * Shared fetch wrapper for API requests.
- * @param endpoint - API endpoint path (e.g., "/api/questions/random")
+ * @param endpoint - API endpoint path (e.g., API_ENDPOINTS.QUESTIONS.RANDOM)
  * @returns Promise resolving to the parsed JSON response
  * @throws Error if the request fails or the server returns a non-OK status
  */
@@ -35,7 +36,7 @@ const questionsApiClient = {
      * @returns Promise resolving to a random question
      */
     getRandomQuestion: async (): Promise<Question> => {
-        return apiFetch<Question>("/api/questions/random");
+        return apiFetch<Question>(API_ENDPOINTS.QUESTIONS.RANDOM);
     },
 };
 

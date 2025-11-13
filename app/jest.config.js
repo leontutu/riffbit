@@ -4,9 +4,18 @@ module.exports = {
     transformIgnorePatterns: [
         "node_modules/(?!(jest-)?@?react-native|@react-native-community|@react-navigation|expo(nent)?|@expo(nent)?|@expo-google-fonts|react-clone-referenced-element|@unimodules|unimodules|sentry-expo|native-base|react-native-svg)",
     ],
-    testPathIgnorePatterns: ["/node_modules/", "/android/", "/ios/"],
+    testPathIgnorePatterns: [
+        "/node_modules/",
+        "/android/",
+        "/ios/",
+        "/server/",
+        "../server/",
+        "../../server/",
+    ],
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
     moduleNameMapper: {
         "^src/(.*)$": "<rootDir>/src/$1",
     },
+    rootDir: ".",
+    testMatch: ["<rootDir>/src/**/*.test.{ts,tsx}"],
 };

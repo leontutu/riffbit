@@ -1,4 +1,5 @@
-import { Question } from "@shared/types";
+import API_ENDPOINTS from "@shared/constants/apiEndpoints";
+import { Question } from "@shared/types/types";
 
 import questionsApiClient from "./questionsApiClient";
 
@@ -25,7 +26,7 @@ describe("questionsApiClient", () => {
 
             expect(result).toEqual(mockQuestion);
             expect(mockedFetch).toHaveBeenCalledWith(
-                expect.stringContaining("/api/questions/random")
+                expect.stringContaining(API_ENDPOINTS.QUESTIONS.RANDOM)
             );
         });
 

@@ -1,3 +1,4 @@
+import API_ENDPOINTS from "@shared/constants/apiEndpoints";
 import { Application } from "express";
 
 import * as questionController from "../controllers/questionController";
@@ -16,7 +17,7 @@ export function registerQuestionRoutes(app: Application) {
      * Route: GET /api/questions
      * Fetches all questions.
      */
-    app.get("/api/questions", async (req, res) => {
+    app.get(API_ENDPOINTS.QUESTIONS.ALL, async (req, res) => {
         await questionController.getAllQuestions(req, res);
     });
 
@@ -24,7 +25,7 @@ export function registerQuestionRoutes(app: Application) {
      * Route: GET /api/questions/random
      * Fetches a single random question.
      */
-    app.get("/api/questions/random", async (req, res) => {
+    app.get(API_ENDPOINTS.QUESTIONS.RANDOM, async (req, res) => {
         await questionController.getRandomQuestion(req, res);
     });
 
@@ -32,7 +33,7 @@ export function registerQuestionRoutes(app: Application) {
      * Route: GET /api/questions/:id
      * Fetches a single question by its ID.
      */
-    app.get("/api/questions/:id", async (req, res) => {
+    app.get(API_ENDPOINTS.QUESTIONS.BY_ID_TEMPLATE, async (req, res) => {
         await questionController.getQuestionById(req, res);
     });
 }
