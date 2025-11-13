@@ -1,4 +1,4 @@
-import { Question } from "@shared/types";
+import { Question } from "@shared/types/types";
 import parse from "csv-parser";
 import * as fs from "fs";
 
@@ -38,7 +38,7 @@ export function getAllQuestions(): Promise<Question[]> {
  * Retrieves a randomly selected question.
  * @returns Promise resolving to a random question
  */
-export async function fetchRandomQuestion(): Promise<Question> {
+export async function getRandomQuestion(): Promise<Question> {
     const questions = await getAllQuestions();
     const randomIndex = Math.floor(Math.random() * questions.length);
     return questions[randomIndex];
@@ -49,7 +49,7 @@ export async function fetchRandomQuestion(): Promise<Question> {
  * @param id - The unique identifier of the question
  * @returns Promise resolving to the question, or undefined if not found
  */
-export async function fetchQuestion(id: number): Promise<Question | undefined> {
+export async function getQuestionById(id: number): Promise<Question | undefined> {
     const questions = await getAllQuestions();
     return questions.find(question => question.id === id);
 }

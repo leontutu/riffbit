@@ -1,38 +1,23 @@
-import { useState } from "react";
-import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { StatusBar } from "expo-status-bar";
+import { useRandomQuestion } from "src/hooks/useQuestionsApi";
 
 export default function App() {
-    const DEFAULT_NGROK = process.env.EXPO_PUBLIC_DEFAULT_NGROK || "";
-    const serverUrl = Platform.OS === "web" ? "http://localhost:3000" : DEFAULT_NGROK;
-    const testEndpoint = "/api/questions/random";
-    const [responseMessage, setResponseMessage] = useState("Not connected");
-
-    const getRandomQuestion = async () => {
-        try {
-            const response = await fetch(serverUrl + testEndpoint);
-            if (!response.ok) {
-                throw new Error(`Server error: ${response.status}`);
-            }
-            const data = await response.json();
-            setResponseMessage(`Server response: ${data.text}`);
-        } catch (error: unknown) {
-            const message = error instanceof Error ? error.message : "Unknown error";
-            setResponseMessage(`Connection failed: ${message}`);
-        }
-    };
+    const { question, isLoading, error, refresh } = useRandomQuestion();
 
     return (
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
                 <Image style={styles.image} source={require("./assets/logo.png") as number} />
                 <View style={styles.connectionContainer}>
-                    <Pressable style={styles.materialButton} onPress={getRandomQuestion}>
+                    <Pressable style={styles.materialButton} onPress={refresh}>
                         <Text style={styles.materialButtonText}>Test Server Connection</Text>
                     </Pressable>
-                    <Text style={styles.message}>{responseMessage}</Text>
+                    <Text style={styles.message}>
+                        {error || (isLoading ? "Loading..." : question?.text)}
+                    </Text>
                 </View>
                 <StatusBar style="auto" />
             </SafeAreaView>

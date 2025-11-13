@@ -1,4 +1,5 @@
-import { Question } from "@shared/types";
+import API_ENDPOINTS from "@shared/constants/apiEndpoints";
+import { Question } from "@shared/types/types";
 import request from "supertest";
 import { describe, expect, it } from "vitest";
 
@@ -7,7 +8,7 @@ import app from "../app";
 describe("Question API Routes", () => {
     it("GET /api/questions returns all questions", async () => {
         const response = await request(app)
-            .get("/api/questions")
+            .get(API_ENDPOINTS.QUESTIONS.ALL)
             .expect(200)
             .expect("Content-Type", /json/);
 
@@ -26,7 +27,7 @@ describe("Question API Routes", () => {
 
     it("GET /api/questions/random returns a single question", async () => {
         const response = await request(app)
-            .get("/api/questions/random")
+            .get(API_ENDPOINTS.QUESTIONS.RANDOM)
             .expect(200)
             .expect("Content-Type", /json/);
 
@@ -40,7 +41,7 @@ describe("Question API Routes", () => {
 
     it("GET /api/questions/1 returns the specific question", async () => {
         const response = await request(app)
-            .get("/api/questions/1")
+            .get(API_ENDPOINTS.QUESTIONS.BY_ID(1))
             .expect(200)
             .expect("Content-Type", /json/);
 
@@ -52,7 +53,7 @@ describe("Question API Routes", () => {
 
     it("GET /api/questions/9999 returns 404", async () => {
         const response = await request(app)
-            .get("/api/questions/9999")
+            .get(API_ENDPOINTS.QUESTIONS.BY_ID(9999))
             .expect(404)
             .expect("Content-Type", /json/);
 
@@ -61,7 +62,8 @@ describe("Question API Routes", () => {
 
     it("GET /api/questions/abc returns 400", async () => {
         const response = await request(app)
-            .get("/api/questions/abc")
+            // @ts-expect-error: Testing invalid ID format
+            .get(API_ENDPOINTS.QUESTIONS.BY_ID("abc"))
             .expect(400)
             .expect("Content-Type", /json/);
 
