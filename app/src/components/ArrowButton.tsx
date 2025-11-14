@@ -17,7 +17,7 @@ export default function ArrowButton({ onPress }: Props) {
                 },
             ]}
         >
-            <Feather name={"arrow-right-circle"} size={85} color="black" />
+            <Feather name={"arrow-right-circle"} size={120} color="black" />
         </Pressable>
     );
 }

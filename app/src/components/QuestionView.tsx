@@ -76,7 +76,7 @@ export default function QuestionView({ newQuestionTrigger }: Props) {
 
 const styles = StyleSheet.create({
     questionContainer: {
-        flex: 1,
+        flex: 1.5,
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: "5%",

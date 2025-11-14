@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
     },
     image: {
         resizeMode: "contain",
-        width: "70%",
+        width: "50%",
     },
 });
