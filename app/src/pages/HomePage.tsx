@@ -1,19 +1,14 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Image, StyleSheet, View } from "react-native";
 
 import ArrowButton from "src/components/ArrowButton";
-import ErrorView from "src/components/ErrorView";
-import LoadingView from "src/components/LoadingView";
-import QuestionText from "src/components/QuestionText";
-import { useRandomQuestion } from "src/hooks/useQuestionsApi";
+import QuestionView from "src/components/QuestionView";
 
 export default function HomePage() {
-    const { question, isLoading, error, refresh } = useRandomQuestion();
+    const [newQuestionTrigger, setNewQuestionTrigger] = useState(false);
 
-    const renderQuestion = () => {
-        if (isLoading) return <LoadingView />;
-        if (error) return <ErrorView errorMessage={error} />;
-        if (question) return <QuestionText text={question.text} />;
-        return <Text>Something went critically wrong</Text>;
+    const onNewQuestionPress = () => {
+        setNewQuestionTrigger(!newQuestionTrigger);
     };
 
     return (
@@ -21,9 +16,9 @@ export default function HomePage() {
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={require("../../assets/logo.png") as number} />
             </View>
-            <View style={styles.questionContainer}>{renderQuestion()}</View>
+            <QuestionView newQuestionTrigger={newQuestionTrigger} />
             <View style={styles.arrowButtonContainer}>
-                <ArrowButton onPress={refresh} />
+                <ArrowButton onPress={onNewQuestionPress} />
             </View>
         </View>
     );
@@ -34,12 +29,6 @@ const styles = StyleSheet.create({
         height: "100%",
         backgroundColor: "#fff",
         alignItems: "center",
-    },
-    questionContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: "10%",
     },
     arrowButtonContainer: {
         flex: 1,

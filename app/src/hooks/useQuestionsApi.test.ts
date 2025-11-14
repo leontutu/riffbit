@@ -21,7 +21,7 @@ describe("useQuestionApi Hook", () => {
         const { result, unmount } = renderHook(() => useRandomQuestion());
         const { question, isLoading, error, refresh } = result.current;
         expect(question).toBeNull();
-        expect(isLoading).toBe(true);
+        expect(isLoading).toBe(false);
         expect(error).toBeNull();
         expect(typeof refresh).toBe("function");
         unmount();
@@ -36,6 +36,9 @@ describe("useQuestionApi Hook", () => {
         mockedApiService.getRandomQuestion.mockResolvedValue(mockQuestion);
 
         const { result } = renderHook(() => useRandomQuestion());
+        act(() => {
+            result.current.refresh();
+        });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
         });
@@ -48,7 +51,9 @@ describe("useQuestionApi Hook", () => {
     test("sets an error when the API call fails", async () => {
         mockedApiService.getRandomQuestion.mockRejectedValue(new Error("Network error"));
         const { result } = renderHook(() => useRandomQuestion());
-
+        act(() => {
+            result.current.refresh();
+        });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
         });
@@ -66,7 +71,9 @@ describe("useQuestionApi Hook", () => {
             .mockResolvedValueOnce(mockQuestion2);
 
         const { result } = renderHook(() => useRandomQuestion());
-
+        act(() => {
+            result.current.refresh();
+        });
         await waitFor(() => expect(result.current.isLoading).toBe(false));
         expect(result.current.question).toEqual(mockQuestion1);
 

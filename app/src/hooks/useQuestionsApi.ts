@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Question } from "@shared/types/types";
 
@@ -33,9 +33,9 @@ export const useRandomQuestion = () => {
         }
     };
 
-    useEffect(() => {
-        getRandomQuestion();
-    }, []);
+    // useEffect(() => {
+    //     getRandomQuestion();
+    // }, []);
 
     return { question, isLoading, error, refresh: getRandomQuestion };
 };
