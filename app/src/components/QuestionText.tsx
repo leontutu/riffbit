@@ -14,8 +14,9 @@ export default function QuestionText({ text }: Props) {
 
 const styles = StyleSheet.create({
     questionText: {
-        fontFamily: "JejuMyeongjo",
-        fontSize: 34,
+        fontFamily: "NanumMyeongjo",
+        fontSize: 30,
+        lineHeight: 40,
         textAlign: "center",
     },
 });
