@@ -7,6 +7,11 @@ import ErrorView from "./ErrorView";
 import LoadingView from "./LoadingView";
 import QuestionText from "./QuestionText";
 
+/**
+ * Manages question display with slide-in animations and loading/error states.
+ * Fetches random questions from the API and animates transitions between questions.
+ */
+
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 type Props = {

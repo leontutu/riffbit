@@ -2,6 +2,11 @@ import { Pressable } from "react-native";
 
 import Feather from "@expo/vector-icons/Feather";
 
+/**
+ * Interactive button for advancing to the next question.
+ * Provides visual feedback with a scale animation on press.
+ */
+
 type Props = {
     onPress: () => void;
 };
@@ -21,11 +26,3 @@ export default function ArrowButton({ onPress }: Props) {
         </Pressable>
     );
 }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         borderRadius: 50,
-//         borderWidth: 5,
-//         overflow: "hidden",
-//     },
-// });

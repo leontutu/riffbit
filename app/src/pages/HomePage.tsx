@@ -4,6 +4,11 @@ import { Image, StyleSheet, View } from "react-native";
 import ArrowButton from "src/components/ArrowButton";
 import QuestionView from "src/components/QuestionView";
 
+/**
+ * Main page displaying the app logo, question view, and navigation button.
+ * Manages the trigger state for fetching new questions.
+ */
+
 export default function HomePage() {
     const [newQuestionTrigger, setNewQuestionTrigger] = useState(false);
 

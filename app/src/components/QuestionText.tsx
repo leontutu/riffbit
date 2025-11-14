@@ -1,5 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 
+/**
+ * Displays question text with consistent typography and styling.
+ */
+
 type Props = {
     text: string;
 };
