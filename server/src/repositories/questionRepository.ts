@@ -1,6 +1,7 @@
 import { Question } from "@shared/types/types";
 import parse from "csv-parser";
 import * as fs from "fs";
+import logger from "src/utils/logger";
 
 /**
  * Repository for managing question data.
@@ -28,7 +29,7 @@ export function getAllQuestions(): Promise<Question[]> {
                 resolve(questions);
             })
             .on("error", error => {
-                console.error("Error reading questions CSV:", error);
+                logger.error({ error }, "Failed to load questions from CSV");
                 reject(error);
             });
     });

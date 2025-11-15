@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import logger from "src/utils/logger";
 
 import * as questionService from "../services/questionService";
 
@@ -18,7 +19,7 @@ export async function getAllQuestions(req: Request, res: Response) {
         const questions = await questionService.getAllQuestions();
         res.json(questions);
     } catch (error) {
-        console.error("Error fetching all questions:", error);
+        logger.error({ error }, "Failed to fetch all questions");
         res.status(500).json({ error: "Failed to retrieve questions" });
     }
 }
@@ -44,8 +45,8 @@ export async function getQuestionById(req: Request, res: Response) {
             res.status(404).json({ error: `Question with ID ${id} not found` });
         }
     } catch (error) {
-        console.error(`Error fetching question ${req.params.id}:`, error);
-        res.status(500).json({ error: "Failed to retrieve question" });
+        logger.error({ error }, `Failed to fetch question with ID ${req.params.id}`);
+        res.status(500).json({ error: "Failed to fetch question" });
     }
 }
 
@@ -60,7 +61,7 @@ export async function getRandomQuestion(req: Request, res: Response) {
         const question = await questionService.getRandomQuestion();
         res.json(question);
     } catch (error) {
-        console.error("Error fetching random question:", error);
-        res.status(500).json({ error: "Failed to retrieve random question" });
+        logger.error({ error }, "Failed to fetch random question");
+        res.status(500).json({ error: "Failed to fetch random question" });
     }
 }
