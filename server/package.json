@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "dev": "tsx watch src/server.ts | npx pino-pretty",
+        "dev": "tsx watch src/server.ts",
         "build": "tsc",
         "start": "node dist/server.js",
         "test": "vitest run --reporter=verbose",
