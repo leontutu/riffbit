@@ -48,5 +48,8 @@
         "husky": "^9.1.7",
         "lint-staged": "^16.2.6",
         "prettier": "^3.6.2"
+    },
+    "dependencies": {
+        "@testing-library/react-native": "^13.3.3"
     }
 }
