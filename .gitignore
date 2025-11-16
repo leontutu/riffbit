@@ -54,3 +54,4 @@ app/android
 
 # other
 /quickNotes.md
+/server/data/csv_edit.js
