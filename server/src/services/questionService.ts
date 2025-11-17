@@ -34,3 +34,12 @@ export async function getRandomQuestion() {
     const question = await questionRepository.getRandomQuestion();
     return question;
 }
+
+/**
+ * Get a random question.
+ * @returns Promise resolving to a single randomly selected question
+ */
+export async function getRandomQuestionWithCategories(categoryIds: number[]) {
+    const question = await questionRepository.getRandomQuestionWithCategories(categoryIds);
+    return question;
+}

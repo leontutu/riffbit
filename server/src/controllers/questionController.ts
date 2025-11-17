@@ -65,3 +65,34 @@ export async function getRandomQuestion(req: Request, res: Response) {
         res.status(500).json({ error: "Failed to fetch random question" });
     }
 }
+
+/**
+ *
+ * Fetch and return a single randomly selected question filtered by category IDs.
+ * @param req - Express request object
+ * @param res - Express response object
+ * @returns Promise that resolves when the response is sent
+ */
+export async function getRandomQuestionWithCategories(req: Request, res: Response) {
+    try {
+        const categoryIdsParam = req.query.categoryIds;
+        if (!categoryIdsParam || typeof categoryIdsParam !== "string") {
+            return res.status(400).json({ error: "categoryIds query parameter is required" });
+        }
+        const categoryIds = categoryIdsParam
+            .split(",")
+            .map(idStr => parseInt(idStr, 10))
+            .filter(id => !isNaN(id));
+
+        if (categoryIds.length === 0) {
+            return res
+                .status(400)
+                .json({ error: "At least one valid category ID must be provided" });
+        }
+        const question = await questionService.getRandomQuestionWithCategories(categoryIds);
+        res.json(question);
+    } catch (error) {
+        logger.error({ error }, "Failed to fetch random question with categories");
+        res.status(500).json({ error: "Failed to fetch random question with categories" });
+    }
+}
