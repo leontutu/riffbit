@@ -13,6 +13,10 @@
         "server",
         "shared"
     ],
+    "overrides": {
+        "react": "19.1.0",
+        "react-native": "0.81.5"
+    },
     "scripts": {
         "build:server": "npm run build --workspace=server",
         "doctor:app": "npm run doctor --workspace=app",
@@ -48,7 +52,8 @@
         "globals": "^16.5.0",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.6",
-        "prettier": "^3.6.2"
+        "prettier": "^3.6.2",
+        "react-test-renderer": "^19.1.0"
     },
     "dependencies": {
         "@testing-library/react-native": "^13.3.3"
