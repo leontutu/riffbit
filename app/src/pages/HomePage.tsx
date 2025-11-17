@@ -19,7 +19,11 @@ export default function HomePage() {
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require("../../assets/logo.png") as number} />
+                <Image
+                    style={styles.image}
+                    source={require("../../assets/logo.png")}
+                    resizeMode="contain"
+                />
             </View>
             <QuestionView newQuestionTrigger={newQuestionTrigger} />
             <View style={styles.arrowButtonContainer}>
@@ -47,7 +51,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
-        resizeMode: "contain",
         width: "50%",
     },
 });
