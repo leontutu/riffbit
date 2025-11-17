@@ -1,0 +1,27 @@
+@baseURL = http://localhost:3000
+@questionId = 1
+
+#Happy Path Testing
+
+###
+GET {{baseURL}}/health
+
+###
+GET {{baseURL}}/api/questions
+
+###
+GET {{baseURL}}/api/questions/{{questionId}}
+
+
+###
+GET {{baseURL}}/api/questions/random
+
+#Error Path Testing
+
+###
+# GET a question that does not exist -> 404
+GET {{baseURL}}/api/questions/9999
+
+###
+# GET a question with an invalid ID format -> 400
+GET {{baseURL}}/api/questions/abc

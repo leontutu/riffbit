@@ -1,0 +1,9 @@
+node_modules
+app/dist
+server/dist
+server/build
+app/build
+package-lock.json
+.husky
+.env
+*.md
