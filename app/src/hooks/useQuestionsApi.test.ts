@@ -1,4 +1,4 @@
-import { Question } from "@shared/types/types";
+import { QuestionDTO } from "@shared/types/types";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 
 import questionsApiService from "../api/services/questionsApiService";
@@ -28,9 +28,10 @@ describe("useQuestionApi Hook", () => {
     });
 
     test("fetches a random question successfully", async () => {
-        const mockQuestion: Question = {
+        const mockQuestion: QuestionDTO = {
             id: 12,
             text: "Stimmt es - wie die Nase eines Mannes, so auch sein Johannes?",
+            categoryIds: [1, 2],
         };
 
         mockedApiService.getRandomQuestion.mockResolvedValue(mockQuestion);
@@ -63,8 +64,8 @@ describe("useQuestionApi Hook", () => {
     });
 
     test("refresh fetches a new question", async () => {
-        const mockQuestion1: Question = { id: 1, text: "First" };
-        const mockQuestion2: Question = { id: 2, text: "Second" };
+        const mockQuestion1: QuestionDTO = { id: 1, text: "First", categoryIds: [1] };
+        const mockQuestion2: QuestionDTO = { id: 2, text: "Second", categoryIds: [2] };
 
         mockedApiService.getRandomQuestion
             .mockResolvedValueOnce(mockQuestion1)
