@@ -51,9 +51,9 @@ describe("Question API Routes", () => {
         expect(question.text).toBe("What is the meaning of life?");
     });
 
-    it("GET /api/questions/9999 returns 404", async () => {
+    it("GET /api/questions/99999 returns 404", async () => {
         const response = await request(app)
-            .get(API_ENDPOINTS.QUESTIONS.BY_ID(9999))
+            .get(API_ENDPOINTS.QUESTIONS.BY_ID(99999))
             .expect(404)
             .expect("Content-Type", /json/);
 

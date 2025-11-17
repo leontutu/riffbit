@@ -20,7 +20,7 @@ describe("questionRepository", () => {
         expect(question!.id).toBe(1);
         expect(question!.text).toBe("What is the meaning of life?");
 
-        question = await getQuestionById(999);
+        question = await getQuestionById(99999);
         expect(question).toBeUndefined();
     });
 
