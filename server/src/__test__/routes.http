@@ -20,7 +20,7 @@ GET {{baseURL}}/api/questions/random
 
 ###
 # GET a question that does not exist -> 404
-GET {{baseURL}}/api/questions/9999
+GET {{baseURL}}/api/questions/99999
 
 ###
 # GET a question with an invalid ID format -> 400
