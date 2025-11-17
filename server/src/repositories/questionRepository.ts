@@ -91,3 +91,32 @@ export async function getQuestionById(id: number): Promise<QuestionDTO | undefin
     const questions = await getAllQuestions();
     return questions.find(question => question.id === id);
 }
+
+/**
+ * Retrieves questions that have at least one of the specified category IDs.
+ * @param categoryIds - Array of category IDs to filter by
+ * @returns Promise resolving to array of questions matching the categories
+ */
+export async function getQuestionsWithCategories(categoryIds: number[]): Promise<QuestionDTO[]> {
+    const questions = await getAllQuestions();
+    return questions.filter(question =>
+        question.categoryIds.some(catId => categoryIds.includes(catId))
+    );
+}
+
+/**
+ * Retrieves a random question from those that have at least one of the specified category IDs.
+ * @param categoryIds - Array of category IDs to filter by
+ * @returns Promise resolving to a random question matching the categories
+ * @throws Error if no questions match the specified categories
+ */
+export async function getRandomQuestionWithCategories(categoryIds: number[]): Promise<QuestionDTO> {
+    const questions = await getQuestionsWithCategories(categoryIds);
+
+    if (questions.length === 0) {
+        throw new Error(`No questions found with category IDs: ${categoryIds.join(", ")}`);
+    }
+
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    return questions[randomIndex];
+}
