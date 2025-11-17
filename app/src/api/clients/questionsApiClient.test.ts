@@ -1,5 +1,5 @@
 import API_ENDPOINTS from "@shared/constants/apiEndpoints";
-import { Question } from "@shared/types/types";
+import { QuestionDTO } from "@shared/types/types";
 
 import questionsApiClient from "./questionsApiClient";
 
@@ -14,7 +14,7 @@ describe("questionsApiClient", () => {
 
     describe("getRandomQuestion", () => {
         test("returns a question on successful fetch", async () => {
-            const mockQuestion: Question = { id: 1, text: "Test question" };
+            const mockQuestion: QuestionDTO = { id: 1, text: "Test question", categoryIds: [1, 2] };
             const mockResponse = {
                 ok: true,
                 json: jest.fn().mockResolvedValue(mockQuestion),

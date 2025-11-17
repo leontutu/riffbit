@@ -1,5 +1,5 @@
 import API_ENDPOINTS from "@shared/constants/apiEndpoints";
-import { Question } from "@shared/types/types";
+import { QuestionDTO } from "@shared/types/types";
 import request from "supertest";
 import { describe, expect, it } from "vitest";
 
@@ -15,12 +15,13 @@ describe("Question API Routes", () => {
         expect(response.body).toBeInstanceOf(Array);
         expect(response.body.length).toBeGreaterThan(0);
 
-        const questions: Question[] = response.body;
+        const questions: QuestionDTO[] = response.body;
 
         expect(questions[0]).toEqual(
             expect.objectContaining({
                 id: expect.any(Number),
                 text: expect.any(String),
+                categoryIds: expect.any(Array),
             })
         );
     });
@@ -33,10 +34,11 @@ describe("Question API Routes", () => {
 
         expect(response.body).toHaveProperty("id");
         expect(response.body).toHaveProperty("text");
-        const question: Question = response.body;
+        const question: QuestionDTO = response.body;
 
         expect(typeof question.id).toBe("number");
         expect(typeof question.text).toBe("string");
+        expect(Array.isArray(question.categoryIds)).toBe(true);
     });
 
     it("GET /api/questions/1 returns the specific question", async () => {
@@ -45,10 +47,11 @@ describe("Question API Routes", () => {
             .expect(200)
             .expect("Content-Type", /json/);
 
-        const question: Question = response.body;
+        const question: QuestionDTO = response.body;
 
         expect(question.id).toBe(1);
         expect(question.text).toBe("What is the meaning of life?");
+        expect(question.categoryIds).toEqual([1, 5]);
     });
 
     it("GET /api/questions/99999 returns 404", async () => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Question } from "@shared/types/types";
+import { QuestionDTO } from "@shared/types/types";
 
 import questionsApiService from "../api/services/questionsApiService";
 
@@ -14,7 +14,7 @@ import questionsApiService from "../api/services/questionsApiService";
  * @returns Object containing question data, loading state, error message, and refresh function
  */
 export const useRandomQuestion = () => {
-    const [question, setQuestion] = useState<Question | null>(null);
+    const [question, setQuestion] = useState<QuestionDTO | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 

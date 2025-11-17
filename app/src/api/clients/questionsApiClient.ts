@@ -1,7 +1,7 @@
 import { Platform } from "react-native";
 
 import API_ENDPOINTS from "@shared/constants/apiEndpoints";
-import { Question } from "@shared/types/types";
+import { QuestionDTO } from "@shared/types/types";
 
 /**
  * HTTP client for questions API.
@@ -35,8 +35,8 @@ const questionsApiClient = {
      * Fetch a random question from the server.
      * @returns Promise resolving to a random question
      */
-    getRandomQuestion: async (): Promise<Question> => {
-        return apiFetch<Question>(API_ENDPOINTS.QUESTIONS.RANDOM);
+    getRandomQuestion: async (): Promise<QuestionDTO> => {
+        return apiFetch<QuestionDTO>(API_ENDPOINTS.QUESTIONS.RANDOM);
     },
 };
 

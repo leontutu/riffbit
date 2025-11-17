@@ -1,4 +1,4 @@
-import { Question } from "@shared/types/types";
+import { QuestionDTO } from "@shared/types/types";
 
 import questionsApiClient from "../clients/questionsApiClient";
 
@@ -13,7 +13,7 @@ const questionsApiService = {
      * Retrieve a random question.
      * @returns Promise resolving to a random question
      */
-    getRandomQuestion: async (): Promise<Question> => {
+    getRandomQuestion: async (): Promise<QuestionDTO> => {
         return await questionsApiClient.getRandomQuestion();
     },
 };
