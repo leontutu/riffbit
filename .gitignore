@@ -55,3 +55,6 @@ app/android
 # other
 /quickNotes.md
 /server/data/csv_edit.js
+/server/data/questions400.csv
+/server/data/questions800.csv
+/server/data/questions1200.csv
