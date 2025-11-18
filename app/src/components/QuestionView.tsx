@@ -48,12 +48,10 @@ export default function QuestionView({
 
     useEffect(() => {
         if (isInitialMount.current) return;
-        console.log("QuestionView useEffect triggered");
 
         isIntroText.current = false;
 
         if (!isLoading && (questionText || error)) {
-            console.log("Starting slide-in animation");
             translateX.setValue(SCREEN_WIDTH);
 
             Animated.timing(translateX, {
