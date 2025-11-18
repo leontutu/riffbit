@@ -28,13 +28,12 @@ The web is saturated with generic, static social question lists. RiffBit's visio
 
 ---
 
-## 📈 Development status: v0.1 shipped 🥳 
-#### → Preparing for v0.2
+## 📈 Development status: v0.2 ready 🥳 
+#### → Solving minor issues v0.2.1
 
-> - Add logging utility
-> - Upgrade and integrate logo
 > - Implement server error handling middleware
-> - Write detailed issues for v0.2
+> - Upgrade and integrate logo
+> - Write detailed issues for v0.3
 > - Improve Roadmap and Wireframes
 
 ---
@@ -47,7 +46,7 @@ The web is saturated with generic, static social question lists. RiffBit's visio
 | **v0.2** | Tailored Experience | Categorized questions, filters                                  |
 | **v0.3** | Smart Discovery     | OpenAI API integration: "similar question", "generate question", "follow-up" |
 | **v0.4** | Social Features     | Shareable questions, user accounts, favorites, question occurence rates based on popularity  
-| **v0.5x** | Iteration                  | Internal distribution, refining features and UI based on user feedback
+| **v0.5x** | Iteration          | Internal distribution, refining features and UI based on user feedback
 | **v0.6** | AI Personalization  | RAG, question retrieval and generation based on user preferences
 | **v0.7** | Polish & Expansion | Finalize UX, future-proof systems, clear backlog |
 | **v1.0** | Production | Deploy Server on AWS, publish app in stores |
