@@ -18,17 +18,16 @@ export default function HomePage() {
 
     return (
         <View style={styles.container}>
-            <View style={styles.imageContainer}>
-                <Image
-                    style={styles.image}
-                    source={require("../../assets/logo.png")}
-                    resizeMode="contain"
-                />
-            </View>
-            <QuestionView newQuestionTrigger={newQuestionTrigger} />
-            <View style={styles.arrowButtonContainer}>
-                <ArrowButton onPress={onNewQuestionPress} />
-            </View>
+            <Image
+                style={styles.image}
+                source={require("../../assets/logo.png")}
+                resizeMode="contain"
+            />
+            <QuestionView
+                layoutStyle={styles.questionViewContainer}
+                newQuestionTrigger={newQuestionTrigger}
+            />
+            <ArrowButton layoutStyle={styles.arrowButtonContainer} onPress={onNewQuestionPress} />
         </View>
     );
 }
@@ -44,13 +43,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    imageContainer: {
-        flex: 1,
-        width: "100%",
+    // },
+    image: {
+        flex: 0.5,
         justifyContent: "center",
         alignItems: "center",
-    },
-    image: {
         width: "50%",
+        height: 50,
+    },
+    questionViewContainer: {
+        flex: 1.5,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: "5%",
     },
 });

@@ -1,4 +1,4 @@
-import { Pressable } from "react-native";
+import { Pressable, View, ViewStyle } from "react-native";
 
 import Feather from "@expo/vector-icons/Feather";
 
@@ -9,20 +9,23 @@ import Feather from "@expo/vector-icons/Feather";
 
 type Props = {
     onPress: () => void;
+    layoutStyle: ViewStyle;
 };
 
-export default function ArrowButton({ onPress }: Props) {
+export default function ArrowButton({ layoutStyle: style, onPress }: Props) {
     return (
-        <Pressable
-            onPress={onPress}
-            style={({ pressed }) => [
-                {
-                    padding: 10,
-                    transform: [{ scale: pressed ? 0.9 : 1.0 }],
-                },
-            ]}
-        >
-            <Feather name={"arrow-right-circle"} size={120} color="black" />
-        </Pressable>
+        <View style={style}>
+            <Pressable
+                onPress={onPress}
+                style={({ pressed }) => [
+                    {
+                        padding: 10,
+                        transform: [{ scale: pressed ? 0.9 : 1.0 }],
+                    },
+                ]}
+            >
+                <Feather name={"arrow-right-circle"} size={120} color="black" />
+            </Pressable>
+        </View>
     );
 }
