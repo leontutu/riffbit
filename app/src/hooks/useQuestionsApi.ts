@@ -43,6 +43,15 @@ export const useRandomQuestion = () => {
             }
         });
 
+        if (activeCategoryIds.length === 0) {
+            // hack: wait a short moment to allow UI to update before setting error
+            await new Promise(resolve => setTimeout(resolve, 50));
+            setError("Please select at least one category.");
+            setQuestion(null);
+            setIsLoading(false);
+            return;
+        }
+
         try {
             const questionData =
                 await questionsApiService.getRandomCategorizedQuestion(activeCategoryIds);

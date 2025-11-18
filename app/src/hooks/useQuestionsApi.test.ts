@@ -113,4 +113,31 @@ describe("useQuestionApi Hook", () => {
 
         expect(mockedApiService.getRandomCategorizedQuestion).toHaveBeenCalledWith([1, 7]);
     });
+
+    test("sends correct category IDs to API", async () => {
+        const mockToggles = {
+            [Category.PHILOSOPHY]: true,
+            [Category.ROMANCE]: false,
+            [Category.DILEMMA]: false,
+            [Category.FANTASY]: false,
+            [Category.REFLECTION]: false,
+            [Category.MEMORIES]: false,
+            [Category.FUN]: true,
+            [Category.SECRETS]: false,
+        };
+
+        const { result } = renderHook(() => useRandomQuestion());
+
+        act(() => {
+            result.current.setToggles(mockToggles);
+        });
+
+        act(() => {
+            result.current.refresh();
+        });
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        expect(mockedApiService.getRandomCategorizedQuestion).toHaveBeenCalledWith([1, 7]);
+    });
 });

@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 /**
  * Displays error messages when question fetching fails.
@@ -12,7 +12,16 @@ type Props = {
 export default function ErrorView({ errorMessage }: Props) {
     return (
         <View>
-            <Text>{errorMessage}</Text>
+            <Text style={styles.errorText}>{errorMessage}</Text>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    errorText: {
+        fontFamily: "NanumMyeongjo",
+        fontSize: 32,
+        lineHeight: 45,
+        textAlign: "center",
+    },
+});
