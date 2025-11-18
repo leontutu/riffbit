@@ -38,6 +38,15 @@ const questionsApiClient = {
     getRandomQuestion: async (): Promise<QuestionDTO> => {
         return apiFetch<QuestionDTO>(API_ENDPOINTS.QUESTIONS.RANDOM);
     },
+
+    /**
+     * Fetch a random question from the server that matches at least one of the provided category IDs.
+     * @param categoryIds - Array of category IDs to filter questions by
+     * @returns Promise resolving to a random question
+     */
+    getRandomCategorizedQuestion: async (categoryIds: number[]): Promise<QuestionDTO> => {
+        return apiFetch<QuestionDTO>(API_ENDPOINTS.QUESTIONS.RANDOM_CATEGORIZED(categoryIds));
+    },
 };
 
 export default questionsApiClient;
