@@ -5,6 +5,7 @@ import { Category } from "@shared/constants/constants";
 import ArrowButton from "src/components/ArrowButton";
 import CategoryGrid from "src/components/CategoryGrid";
 import QuestionView from "src/components/QuestionView";
+import { useRandomQuestion } from "src/hooks/useQuestionsApiWithCategory";
 
 /**
  * Main page displaying the app logo, question view, and navigation button.
@@ -14,9 +15,10 @@ import QuestionView from "src/components/QuestionView";
 export default function HomePage() {
     const [newQuestionTrigger, setNewQuestionTrigger] = useState(false);
 
+    const { question, isLoading, error, refresh } = useRandomQuestion();
+
     const onNewQuestionPress = () => {
         setNewQuestionTrigger(!newQuestionTrigger);
-        console.log(toggles);
     };
 
     const [toggles, setToggles] = useState({
@@ -40,6 +42,10 @@ export default function HomePage() {
             <QuestionView
                 layoutStyle={styles.questionViewContainer}
                 newQuestionTrigger={newQuestionTrigger}
+                questionText={question?.text}
+                isLoading={isLoading}
+                error={error}
+                refresh={refresh}
             />
             <ArrowButton
                 layoutStyle={styles.arrowButtonContainer}
