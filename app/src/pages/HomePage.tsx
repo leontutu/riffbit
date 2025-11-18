@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
-import { Category } from "@shared/constants/constants";
 import ArrowButton from "src/components/ArrowButton";
 import CategoryGrid from "src/components/CategoryGrid";
 import QuestionView from "src/components/QuestionView";
-import { useRandomQuestion } from "src/hooks/useQuestionsApiWithCategory";
+import { useRandomQuestion } from "src/hooks/useQuestionsApi";
 
 /**
  * Main page displaying the app logo, question view, and navigation button.
@@ -15,22 +14,11 @@ import { useRandomQuestion } from "src/hooks/useQuestionsApiWithCategory";
 export default function HomePage() {
     const [newQuestionTrigger, setNewQuestionTrigger] = useState(false);
 
-    const { question, isLoading, error, refresh } = useRandomQuestion();
+    const { toggles, setToggles, question, isLoading, error, refresh } = useRandomQuestion();
 
     const onNewQuestionPress = () => {
         setNewQuestionTrigger(!newQuestionTrigger);
     };
-
-    const [toggles, setToggles] = useState({
-        [Category.PHILOSOPHY]: true,
-        [Category.ROMANCE]: true,
-        [Category.DILEMMA]: true,
-        [Category.FANTASY]: true,
-        [Category.REFLECTION]: true,
-        [Category.MEMORIES]: true,
-        [Category.FUN]: true,
-        [Category.SECRETS]: true,
-    });
 
     return (
         <View style={styles.container}>

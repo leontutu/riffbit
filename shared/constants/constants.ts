@@ -25,3 +25,7 @@ export const CATEGORY_ID_TO_CATEGORY = new Map<number, Category>([
     [7, Category.FUN],
     [8, Category.SECRETS],
 ]);
+
+export const CATEGORY_TO_CATEGORY_ID = new Map<Category, number>(
+    Array.from(CATEGORY_ID_TO_CATEGORY).map(([id, category]) => [category, id])
+);

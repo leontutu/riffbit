@@ -3,15 +3,6 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react-nativ
 
 import HomePage from "./HomePage";
 
-jest.mock("src/hooks/useQuestionsApi", () => ({
-    useRandomQuestion: () => ({
-        question: null,
-        isLoading: false,
-        error: null,
-        refresh: jest.fn(),
-    }),
-}));
-
 describe("HomePage Integration", () => {
     test("pressing a grid item updates the appropriate toggle state", async () => {
         const { UNSAFE_root } = render(<HomePage />);

@@ -16,6 +16,15 @@ const questionsApiService = {
     getRandomQuestion: async (): Promise<QuestionDTO> => {
         return await questionsApiClient.getRandomQuestion();
     },
+
+    /**
+     * Retrieve a random question that matches at least one of the provided category IDs.
+     * @param categoryIds - Array of category IDs to filter questions by
+     * @returns Promise resolving to a random question
+     */
+    getRandomCategorizedQuestion: async (categoryIds: number[]): Promise<QuestionDTO> => {
+        return await questionsApiClient.getRandomCategorizedQuestion(categoryIds);
+    },
 };
 
 export default questionsApiService;

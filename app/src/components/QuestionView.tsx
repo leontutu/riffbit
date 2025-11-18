@@ -17,7 +17,7 @@ type Props = {
     layoutStyle?: object;
     questionText?: string;
     isLoading?: boolean;
-    error?: string;
+    error: string | null;
     refresh: () => void;
 };
 

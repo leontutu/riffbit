@@ -1,3 +1,4 @@
+import { Category } from "@shared/constants/constants";
 import { QuestionDTO } from "@shared/types/types";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 
@@ -7,7 +8,7 @@ import { useRandomQuestion } from "./useQuestionsApi";
 jest.mock("../api/services/questionsApiService", () => ({
     __esModule: true,
     default: {
-        getRandomQuestion: jest.fn(),
+        getRandomCategorizedQuestion: jest.fn(),
     },
 }));
 
@@ -34,7 +35,7 @@ describe("useQuestionApi Hook", () => {
             categoryIds: [1, 2],
         };
 
-        mockedApiService.getRandomQuestion.mockResolvedValue(mockQuestion);
+        mockedApiService.getRandomCategorizedQuestion.mockResolvedValue(mockQuestion);
 
         const { result } = renderHook(() => useRandomQuestion());
         act(() => {
@@ -50,7 +51,7 @@ describe("useQuestionApi Hook", () => {
     });
 
     test("sets an error when the API call fails", async () => {
-        mockedApiService.getRandomQuestion.mockRejectedValue(new Error("Network error"));
+        mockedApiService.getRandomCategorizedQuestion.mockRejectedValue(new Error("Network error"));
         const { result } = renderHook(() => useRandomQuestion());
         act(() => {
             result.current.refresh();
@@ -67,7 +68,7 @@ describe("useQuestionApi Hook", () => {
         const mockQuestion1: QuestionDTO = { id: 1, text: "First", categoryIds: [1] };
         const mockQuestion2: QuestionDTO = { id: 2, text: "Second", categoryIds: [2] };
 
-        mockedApiService.getRandomQuestion
+        mockedApiService.getRandomCategorizedQuestion
             .mockResolvedValueOnce(mockQuestion1)
             .mockResolvedValueOnce(mockQuestion2);
 
@@ -84,5 +85,32 @@ describe("useQuestionApi Hook", () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false));
         expect(result.current.question).toEqual(mockQuestion2);
+    });
+
+    test("sends correct category IDs to API", async () => {
+        const mockToggles = {
+            [Category.PHILOSOPHY]: true,
+            [Category.ROMANCE]: false,
+            [Category.DILEMMA]: false,
+            [Category.FANTASY]: false,
+            [Category.REFLECTION]: false,
+            [Category.MEMORIES]: false,
+            [Category.FUN]: true,
+            [Category.SECRETS]: false,
+        };
+
+        const { result } = renderHook(() => useRandomQuestion());
+
+        act(() => {
+            result.current.setToggles(mockToggles);
+        });
+
+        act(() => {
+            result.current.refresh();
+        });
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        expect(mockedApiService.getRandomCategorizedQuestion).toHaveBeenCalledWith([1, 7]);
     });
 });
