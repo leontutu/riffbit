@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
+import { Category } from "@shared/constants/constants";
 import ArrowButton from "src/components/ArrowButton";
+import CategoryGrid from "src/components/CategoryGrid";
 import QuestionView from "src/components/QuestionView";
 
 /**
@@ -14,21 +16,41 @@ export default function HomePage() {
 
     const onNewQuestionPress = () => {
         setNewQuestionTrigger(!newQuestionTrigger);
+        console.log(toggles);
     };
+
+    const [toggles, setToggles] = useState({
+        [Category.PHILOSOPHY]: true,
+        [Category.ROMANCE]: true,
+        [Category.DILEMMA]: true,
+        [Category.FANTASY]: true,
+        [Category.REFLECTION]: true,
+        [Category.MEMORIES]: true,
+        [Category.FUN]: true,
+        [Category.SECRETS]: true,
+    });
 
     return (
         <View style={styles.container}>
-            <View style={styles.imageContainer}>
-                <Image
-                    style={styles.image}
-                    source={require("../../assets/logo.png")}
-                    resizeMode="contain"
-                />
-            </View>
-            <QuestionView newQuestionTrigger={newQuestionTrigger} />
-            <View style={styles.arrowButtonContainer}>
-                <ArrowButton onPress={onNewQuestionPress} />
-            </View>
+            <Image
+                style={styles.image}
+                source={require("../../assets/logo.png")}
+                resizeMode="contain"
+            />
+            <QuestionView
+                layoutStyle={styles.questionViewContainer}
+                newQuestionTrigger={newQuestionTrigger}
+            />
+            <ArrowButton
+                layoutStyle={styles.arrowButtonContainer}
+                onPress={onNewQuestionPress}
+                size={90}
+            />
+            <CategoryGrid
+                layoutStyle={styles.categoryGridContainer}
+                toggles={toggles}
+                setToggles={setToggles}
+            />
         </View>
     );
 }
@@ -39,18 +61,27 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
     },
-    arrowButtonContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    imageContainer: {
-        flex: 1,
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-    },
     image: {
+        flex: 0.5,
+        justifyContent: "center",
+        alignItems: "center",
         width: "50%",
+        height: 50,
+    },
+    questionViewContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingHorizontal: "5%",
+    },
+    arrowButtonContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    categoryGridContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+        paddingBottom: 20,
     },
 });

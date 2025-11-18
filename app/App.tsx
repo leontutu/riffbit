@@ -18,6 +18,7 @@ export default function App() {
         <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1 }}>
                 <HomePage />
+                {/* <CategoryGrid /> */}
                 <StatusBar style="auto" />
             </SafeAreaView>
         </SafeAreaProvider>

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Animated, Dimensions, StyleSheet, Text } from "react-native";
+import { Animated, Dimensions, Text } from "react-native";
 
 import { useRandomQuestion } from "src/hooks/useQuestionsApi";
 
@@ -16,9 +16,10 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 type Props = {
     newQuestionTrigger: boolean;
+    layoutStyle?: object;
 };
 
-export default function QuestionView({ newQuestionTrigger }: Props) {
+export default function QuestionView({ newQuestionTrigger, layoutStyle }: Props) {
     const { question, isLoading, error, refresh } = useRandomQuestion();
 
     const isInitialMount = useRef(true);
@@ -72,18 +73,5 @@ export default function QuestionView({ newQuestionTrigger }: Props) {
         });
     }, [newQuestionTrigger]);
 
-    return (
-        <Animated.View style={[styles.questionContainer, animatedStyle]}>
-            {renderQuestion()}
-        </Animated.View>
-    );
+    return <Animated.View style={[layoutStyle, animatedStyle]}>{renderQuestion()}</Animated.View>;
 }
-
-const styles = StyleSheet.create({
-    questionContainer: {
-        flex: 1.5,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: "5%",
-    },
-});

@@ -34,7 +34,7 @@
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [
-            "eslint --max-warnings=0",
+            "eslint --max-warnings=0 --no-warn-ignored",
             "prettier --check"
         ],
         "*.json": "prettier --check"
@@ -56,6 +56,7 @@
         "react-test-renderer": "^19.1.0"
     },
     "dependencies": {
-        "@testing-library/react-native": "^13.3.3"
+        "@testing-library/react-native": "^13.3.3",
+        "expo": "54.0.24"
     }
 }
