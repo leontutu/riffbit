@@ -10,9 +10,10 @@ import Feather from "@expo/vector-icons/Feather";
 type Props = {
     onPress: () => void;
     layoutStyle: ViewStyle;
+    size: number;
 };
 
-export default function ArrowButton({ layoutStyle: style, onPress }: Props) {
+export default function ArrowButton({ layoutStyle: style, onPress, size }: Props) {
     return (
         <View style={style}>
             <Pressable
@@ -24,7 +25,7 @@ export default function ArrowButton({ layoutStyle: style, onPress }: Props) {
                     },
                 ]}
             >
-                <Feather name={"arrow-right-circle"} size={120} color="black" />
+                <Feather name={"arrow-right-circle"} size={size} color="black" />
             </Pressable>
         </View>
     );
