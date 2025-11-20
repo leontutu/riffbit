@@ -30,6 +30,14 @@ export function registerQuestionRoutes(app: Application) {
     });
 
     /**
+     * Route: GET /api/questions/random-categorized?categoryIds=:categoryIds
+     * Fetches a single random question filtered by category IDs.
+     */
+    app.get(API_ENDPOINTS.QUESTIONS.RANDOM_CATEGORIZED_TEMPLATE, async (req, res) => {
+        await questionController.getRandomQuestionWithCategories(req, res);
+    });
+
+    /**
      * Route: GET /api/questions/:id
      * Fetches a single question by its ID.
      */

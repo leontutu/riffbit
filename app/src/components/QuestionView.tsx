@@ -1,7 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Animated, Dimensions, StyleSheet, Text } from "react-native";
-
-import { useRandomQuestion } from "src/hooks/useQuestionsApi";
+import { Animated, Dimensions, Text } from "react-native";
 
 import ErrorView from "./ErrorView";
 import LoadingView from "./LoadingView";
@@ -16,11 +14,21 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 type Props = {
     newQuestionTrigger: boolean;
+    layoutStyle?: object;
+    questionText?: string;
+    isLoading?: boolean;
+    error: string | null;
+    refresh: () => void;
 };
 
-export default function QuestionView({ newQuestionTrigger }: Props) {
-    const { question, isLoading, error, refresh } = useRandomQuestion();
-
+export default function QuestionView({
+    questionText,
+    isLoading,
+    error,
+    refresh,
+    newQuestionTrigger,
+    layoutStyle,
+}: Props) {
     const isInitialMount = useRef(true);
     const isIntroText = useRef(true);
     const translateX = useRef(new Animated.Value(0)).current;
@@ -34,7 +42,7 @@ export default function QuestionView({ newQuestionTrigger }: Props) {
             );
         if (isLoading) return <LoadingView />;
         if (error) return <ErrorView errorMessage={error} />;
-        if (question) return <QuestionText text={`"${question.text}"`} />;
+        if (questionText) return <QuestionText text={`"${questionText}"`} />;
         return <Text>Something went critically wrong</Text>;
     };
 
@@ -42,7 +50,8 @@ export default function QuestionView({ newQuestionTrigger }: Props) {
         if (isInitialMount.current) return;
 
         isIntroText.current = false;
-        if (!isLoading) {
+
+        if (!isLoading && (questionText || error)) {
             translateX.setValue(SCREEN_WIDTH);
 
             Animated.timing(translateX, {
@@ -51,7 +60,7 @@ export default function QuestionView({ newQuestionTrigger }: Props) {
                 useNativeDriver: true,
             }).start();
         }
-    }, [isLoading]);
+    }, [isLoading, questionText, error]);
 
     const animatedStyle = {
         transform: [{ translateX: translateX }],
@@ -72,18 +81,5 @@ export default function QuestionView({ newQuestionTrigger }: Props) {
         });
     }, [newQuestionTrigger]);
 
-    return (
-        <Animated.View style={[styles.questionContainer, animatedStyle]}>
-            {renderQuestion()}
-        </Animated.View>
-    );
+    return <Animated.View style={[layoutStyle, animatedStyle]}>{renderQuestion()}</Animated.View>;
 }
-
-const styles = StyleSheet.create({
-    questionContainer: {
-        flex: 1.5,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: "5%",
-    },
-});

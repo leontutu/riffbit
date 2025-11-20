@@ -9,9 +9,18 @@ type Props = {
 };
 
 export default function QuestionText({ text }: Props) {
+    const [dynamicFontSize, dynamicLineHeight] = getDynamicTextStyles(text);
+
     return (
         <View>
-            <Text style={styles.questionText}>{text}</Text>
+            <Text
+                style={[
+                    styles.questionText,
+                    { fontSize: dynamicFontSize, lineHeight: dynamicLineHeight },
+                ]}
+            >
+                {text}
+            </Text>
         </View>
     );
 }
@@ -24,3 +33,20 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
 });
+
+function getDynamicTextStyles(text: string): [number, number] {
+    const LINE_HEIGHT_RATIO = 1.4;
+
+    let fontSize: number;
+    if (text.length > 140) {
+        fontSize = 24;
+    } else if (text.length > 120) {
+        fontSize = 26;
+    } else if (text.length > 80) {
+        fontSize = 30;
+    } else {
+        fontSize = 32;
+    }
+
+    return [fontSize, fontSize * LINE_HEIGHT_RATIO];
+}

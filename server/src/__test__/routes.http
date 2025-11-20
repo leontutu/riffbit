@@ -1,6 +1,7 @@
 @baseURL = http://localhost:3000
 @questionId = 1
-
+@categoryIds = 1,2,3,4,5,6,7,8
+# @categoryIds = 1,2
 #Happy Path Testing
 
 ###
@@ -12,6 +13,8 @@ GET {{baseURL}}/api/questions
 ###
 GET {{baseURL}}/api/questions/{{questionId}}
 
+###
+GET {{baseURL}}/api/questions/random-categorized?categoryIds={{categoryIds}}
 
 ###
 GET {{baseURL}}/api/questions/random
@@ -20,8 +23,12 @@ GET {{baseURL}}/api/questions/random
 
 ###
 # GET a question that does not exist -> 404
-GET {{baseURL}}/api/questions/9999
+GET {{baseURL}}/api/questions/99999
 
 ###
 # GET a question with an invalid ID format -> 400
 GET {{baseURL}}/api/questions/abc
+
+###
+# get random categorized questions with invalid category IDs -> 400
+GET {{baseURL}}/api/questions/random-categorized?categoryIds=invalid
