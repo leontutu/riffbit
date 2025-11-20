@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        paddingHorizontal: "5%",
+        paddingHorizontal: "6%",
     },
     arrowButtonContainer: {
         justifyContent: "center",
