@@ -5,7 +5,7 @@
     "main": "server.js",
     "scripts": {
         "dev": "tsx watch src/server.ts",
-        "debug": "tsx watch --inspect src/server.ts",
+        "debug": "LOG_LEVEL=debug tsx watch --inspect src/server.ts",
         "build": "tsc",
         "start": "node dist/server.js",
         "test": "vitest run --reporter=verbose",
