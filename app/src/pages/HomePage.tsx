@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
-import ArrowButton from "src/components/ArrowButton";
 import CategoryGrid from "src/components/CategoryGrid";
+import CircleIconButton from "src/components/CircleIconButton";
 import QuestionView from "src/components/QuestionView";
-import { useRandomQuestion } from "src/hooks/useQuestionsApi";
+import { useFetchQuestion } from "src/hooks/useFetchQuestion";
 
 /**
  * Main page displaying the app logo, question view, and navigation button.
@@ -14,11 +14,22 @@ import { useRandomQuestion } from "src/hooks/useQuestionsApi";
 export default function HomePage() {
     const [newQuestionTrigger, setNewQuestionTrigger] = useState(false);
 
-    const { toggles, setToggles, question, isLoading, error, refresh } = useRandomQuestion();
+    const {
+        toggles,
+        setToggles,
+        questionText,
+        isLoading,
+        error,
+        fetchRandom,
+        fetchSimilar,
+        fetchFollowUp,
+    } = useFetchQuestion();
 
     const onNewQuestionPress = () => {
         setNewQuestionTrigger(!newQuestionTrigger);
     };
+
+    const BUTTON_SIZE = 60;
 
     return (
         <View style={styles.container}>
@@ -30,16 +41,31 @@ export default function HomePage() {
             <QuestionView
                 layoutStyle={styles.questionViewContainer}
                 newQuestionTrigger={newQuestionTrigger}
-                questionText={question?.text}
+                questionText={questionText}
                 isLoading={isLoading}
                 error={error}
-                refresh={refresh}
+                refresh={fetchRandom}
             />
-            <ArrowButton
-                layoutStyle={styles.arrowButtonContainer}
-                onPress={onNewQuestionPress}
-                size={90}
-            />
+            <View style={styles.buttonRow}>
+                <CircleIconButton
+                    layoutStyle={styles.arrowButtonContainer}
+                    onPress={() => fetchSimilar()}
+                    size={BUTTON_SIZE}
+                    iconName="slack"
+                />
+                <CircleIconButton
+                    layoutStyle={styles.arrowButtonContainer}
+                    onPress={onNewQuestionPress}
+                    size={BUTTON_SIZE}
+                    iconName="arrow-right"
+                />
+                <CircleIconButton
+                    layoutStyle={styles.arrowButtonContainer}
+                    onPress={() => fetchFollowUp()}
+                    size={BUTTON_SIZE}
+                    iconName="eye"
+                />
+            </View>
             <CategoryGrid
                 layoutStyle={styles.categoryGridContainer}
                 toggles={toggles}
@@ -67,6 +93,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: "6%",
+    },
+    buttonRow: {
+        flexDirection: "row",
+        gap: 15,
+        margin: 20,
     },
     arrowButtonContainer: {
         justifyContent: "center",
