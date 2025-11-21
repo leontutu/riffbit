@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 
+import { registerGenerationRoutes } from "./routes/generationRoutes";
 import { registerHealthRoutes } from "./routes/healthRoutes";
 import { registerQuestionRoutes } from "./routes/questionRoutes";
 import logger from "./utils/logger";
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 });
 
 registerQuestionRoutes(app);
+registerGenerationRoutes(app);
 registerHealthRoutes(app);
 
 export default app;

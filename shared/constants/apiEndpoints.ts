@@ -8,6 +8,12 @@ const API_ENDPOINTS = {
         BY_ID_TEMPLATE: "/api/questions/:id",
         ALL: "/api/questions",
     },
+    GENERATION: {
+        SIMILAR: (id: number) => `/api/generation/similar/${id}`,
+        SIMILAR_TEMPLATE: "/api/generation/similar/:id",
+        FOLLOWUP: (id: number) => `/api/generation/followup/${id}`,
+        FOLLOWUP_TEMPLATE: "/api/generation/followup/:id",
+    },
 };
 
 export default API_ENDPOINTS;
