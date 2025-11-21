@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CATEGORY_TO_CATEGORY_ID, Category } from "@shared/constants/constants";
 import { QuestionDTO } from "@shared/types/types";
 
-import questionsApiService from "../api/services/questionsApiService";
+import httpService from "../api/services/httpService";
 
 /**
  * React hook for fetching random questions by category.
@@ -54,7 +54,7 @@ export const useRandomQuestion = () => {
 
         try {
             const questionData =
-                await questionsApiService.getRandomCategorizedQuestion(activeCategoryIds);
+                await httpService.questions.getRandomCategorizedQuestion(activeCategoryIds);
             setQuestion(questionData);
         } catch (e: unknown) {
             const message = e instanceof Error ? e.message : "Oops! Something went wrong.";

@@ -2,17 +2,20 @@ import { Category } from "@shared/constants/constants";
 import { QuestionDTO } from "@shared/types/types";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 
-import questionsApiService from "../api/services/questionsApiService";
+import httpService from "../api/services/httpService";
 import { useRandomQuestion } from "./useQuestionsApi";
 
-jest.mock("../api/services/questionsApiService", () => ({
+jest.mock("../api/services/httpService", () => ({
     __esModule: true,
     default: {
-        getRandomCategorizedQuestion: jest.fn(),
+        questions: {
+            getRandomCategorizedQuestion: jest.fn(),
+        },
     },
 }));
+const mockedHttpService = jest.mocked(httpService);
 
-const mockedApiService = questionsApiService as jest.Mocked<typeof questionsApiService>;
+// const mockedHttpService = httpService as jest.Mocked<typeof httpService>;
 describe("useQuestionApi Hook", () => {
     afterEach(() => {
         jest.clearAllMocks();
@@ -35,7 +38,7 @@ describe("useQuestionApi Hook", () => {
             categoryIds: [1, 2],
         };
 
-        mockedApiService.getRandomCategorizedQuestion.mockResolvedValue(mockQuestion);
+        mockedHttpService.questions.getRandomCategorizedQuestion.mockResolvedValue(mockQuestion);
 
         const { result } = renderHook(() => useRandomQuestion());
         act(() => {
@@ -51,7 +54,9 @@ describe("useQuestionApi Hook", () => {
     });
 
     test("sets an error when the API call fails", async () => {
-        mockedApiService.getRandomCategorizedQuestion.mockRejectedValue(new Error("Network error"));
+        mockedHttpService.questions.getRandomCategorizedQuestion.mockRejectedValue(
+            new Error("Network error")
+        );
         const { result } = renderHook(() => useRandomQuestion());
         act(() => {
             result.current.refresh();
@@ -68,7 +73,7 @@ describe("useQuestionApi Hook", () => {
         const mockQuestion1: QuestionDTO = { id: 1, text: "First", categoryIds: [1] };
         const mockQuestion2: QuestionDTO = { id: 2, text: "Second", categoryIds: [2] };
 
-        mockedApiService.getRandomCategorizedQuestion
+        mockedHttpService.questions.getRandomCategorizedQuestion
             .mockResolvedValueOnce(mockQuestion1)
             .mockResolvedValueOnce(mockQuestion2);
 
@@ -111,7 +116,9 @@ describe("useQuestionApi Hook", () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-        expect(mockedApiService.getRandomCategorizedQuestion).toHaveBeenCalledWith([1, 7]);
+        expect(mockedHttpService.questions.getRandomCategorizedQuestion).toHaveBeenCalledWith([
+            1, 7,
+        ]);
     });
 
     test("sends correct category IDs to API", async () => {
@@ -138,6 +145,8 @@ describe("useQuestionApi Hook", () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-        expect(mockedApiService.getRandomCategorizedQuestion).toHaveBeenCalledWith([1, 7]);
+        expect(mockedHttpService.questions.getRandomCategorizedQuestion).toHaveBeenCalledWith([
+            1, 7,
+        ]);
     });
 });
