@@ -19,10 +19,17 @@ import { Instructions } from "../external/prompts.js";
  * -> Approx cost per question generation: $0.0020875
  * -> Approx cost per 1000 question generations: $2.09
  */
+let client: OpenAI | null = null;
 
-const client = new OpenAI();
+function getOpenAIClient(): OpenAI {
+    if (!client) {
+        client = new OpenAI();
+    }
+    return client;
+}
 
 export async function generateSimilarQuestion(seedQuestion: string) {
+    const client = getOpenAIClient();
     logger.info(`Generating similar question...`);
     logger.debug(`Seed question: ${seedQuestion}`);
     let timerStart = Date.now();
@@ -42,9 +49,11 @@ export async function generateSimilarQuestion(seedQuestion: string) {
 }
 
 export async function generateFollowUpQuestion(seedQuestion: string) {
+    const client = getOpenAIClient();
     logger.info(`Generating follow-up question...`);
     logger.debug(`Seed question: ${seedQuestion}`);
     let timerStart = Date.now();
+
     const response = await client.responses.create({
         model: "gpt-5-mini",
         // reasoning: { effort: "medium" },
