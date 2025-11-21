@@ -19,6 +19,12 @@ GET {{baseURL}}/api/questions/random-categorized?categoryIds={{categoryIds}}
 ###
 GET {{baseURL}}/api/questions/random
 
+###
+POST {{baseURL}}/api/generation/similar/{{questionId}}
+
+###
+POST {{baseURL}}/api/generation/followup/{{questionId}}
+
 #Error Path Testing
 
 ###
