@@ -4,7 +4,7 @@ import { Image, StyleSheet, View } from "react-native";
 import CategoryGrid from "src/components/CategoryGrid";
 import CircleIconButton from "src/components/CircleIconButton";
 import QuestionView from "src/components/QuestionView";
-import { useRandomQuestion } from "src/hooks/useQuestionsApi";
+import { useFetchQuestion } from "src/hooks/useFetchQuestion";
 
 /**
  * Main page displaying the app logo, question view, and navigation button.
@@ -14,7 +14,16 @@ import { useRandomQuestion } from "src/hooks/useQuestionsApi";
 export default function HomePage() {
     const [newQuestionTrigger, setNewQuestionTrigger] = useState(false);
 
-    const { toggles, setToggles, question, isLoading, error, refresh } = useRandomQuestion();
+    const {
+        toggles,
+        setToggles,
+        questionText,
+        isLoading,
+        error,
+        fetchRandom,
+        fetchSimilar,
+        fetchFollowUp,
+    } = useFetchQuestion();
 
     const onNewQuestionPress = () => {
         setNewQuestionTrigger(!newQuestionTrigger);
@@ -32,15 +41,15 @@ export default function HomePage() {
             <QuestionView
                 layoutStyle={styles.questionViewContainer}
                 newQuestionTrigger={newQuestionTrigger}
-                questionText={question?.text}
+                questionText={questionText}
                 isLoading={isLoading}
                 error={error}
-                refresh={refresh}
+                refresh={fetchRandom}
             />
             <View style={styles.buttonRow}>
                 <CircleIconButton
                     layoutStyle={styles.arrowButtonContainer}
-                    onPress={onNewQuestionPress}
+                    onPress={() => fetchSimilar()}
                     size={BUTTON_SIZE}
                     iconName="slack"
                 />
@@ -52,7 +61,7 @@ export default function HomePage() {
                 />
                 <CircleIconButton
                     layoutStyle={styles.arrowButtonContainer}
-                    onPress={onNewQuestionPress}
+                    onPress={() => fetchFollowUp()}
                     size={BUTTON_SIZE}
                     iconName="eye"
                 />

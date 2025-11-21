@@ -15,7 +15,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get("window");
 type Props = {
     newQuestionTrigger: boolean;
     layoutStyle?: object;
-    questionText?: string;
+    questionText: string | null;
     isLoading?: boolean;
     error: string | null;
     refresh: () => void;
