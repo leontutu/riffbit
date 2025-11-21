@@ -1,4 +1,9 @@
-export const PROMPT_GENERATE_SIMILAR = `
+/**
+ * Instructions for prompt generation.
+ * These are versioned in my OpenAI dashboard to compare performance evaluations.
+ */
+
+const GENERATE_SIMILAR = `
 ### ROLE
 You are a witty conversation facilitator. Your goal is to deepen engagement by asking a specific, often funny or provocative **New Question**.
 
@@ -27,7 +32,7 @@ Good Output: "If you were given $10,000 that you had to spend on an experience (
 ### INPUT SEED
 `;
 
-export const PROMPT_GENERATE_FOLLOWUP = `
+const GENERATE_FOLLOWUP = `
 ### ROLE
 You are a witty conversation facilitator. Your goal is to deepen engagement by asking a specific, often funny or provocative **Follow-Up Question**.
 
@@ -64,3 +69,8 @@ Follow-up: "If you were on a date with your celebrity crush and they did exactly
 
 ### INPUT SEED
 `;
+
+export enum Instructions {
+    SIMILAR = GENERATE_SIMILAR,
+    FOLLOWUP = GENERATE_FOLLOWUP,
+}
