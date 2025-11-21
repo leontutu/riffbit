@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 /**
  * Displays a loading state while questions are being fetched.
@@ -7,8 +7,16 @@ import { Text, View } from "react-native";
 
 export default function LoadingView() {
     return (
-        <View>
-            <Text>Loading...</Text>
+        <View style={styles.container}>
+            <ActivityIndicator size={100} color="pink" />
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});

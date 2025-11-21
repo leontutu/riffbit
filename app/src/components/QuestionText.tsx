@@ -38,10 +38,14 @@ function getDynamicTextStyles(text: string): [number, number] {
     const LINE_HEIGHT_RATIO = 1.4;
 
     let fontSize: number;
-    if (text.length > 140) {
+    if (text.length > 160) {
+        fontSize = 20;
+    } else if (text.length > 140) {
         fontSize = 24;
     } else if (text.length > 120) {
         fontSize = 26;
+    } else if (text.length > 100) {
+        fontSize = 28;
     } else if (text.length > 80) {
         fontSize = 30;
     } else {
