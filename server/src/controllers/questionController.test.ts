@@ -1,3 +1,4 @@
+import QuestionNotFoundError from "src/errors/QuestionNotFoundError";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 import * as questionService from "../services/questionService";
@@ -40,7 +41,9 @@ describe("questionController", () => {
         });
 
         test("returns 404 when not found", async () => {
-            vi.spyOn(questionService, "getQuestionById").mockResolvedValue(undefined as any);
+            vi.spyOn(questionService, "getQuestionById").mockRejectedValue(
+                new QuestionNotFoundError(5)
+            );
             const req = { params: { id: "5" } } as any;
             const res = makeRes();
 
@@ -48,7 +51,7 @@ describe("questionController", () => {
 
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.status().json).toHaveBeenCalledWith({
-                error: "Question with ID 5 not found",
+                error: 'Question with id "5" not found',
             });
         });
 

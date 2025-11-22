@@ -66,6 +66,7 @@ describe("Question API Routes", () => {
                 .expect("Content-Type", /json/);
 
             expect(response.body.error).toContain("not found");
+            expect(response.body.error).toContain("99999");
         });
 
         it("returns 400 for invalid ID format", async () => {

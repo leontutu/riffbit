@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import QuestionNotFoundError from "src/errors/QuestionNotFoundError";
 import logger from "src/utils/logger";
 
 import * as generationService from "../services/generationService";
@@ -23,16 +24,13 @@ export async function generateSimilarQuestion(req: Request, res: Response) {
         }
 
         const question = await questionService.getQuestionById(id);
-
-        if (!question) {
-            res.status(404).json({ error: `Question with ID ${id} not found` });
-            return;
-        }
-
         const similarQuestion = await generationService.generateSimilarQuestion(question.text);
 
         res.json(similarQuestion);
     } catch (error) {
+        if (error instanceof QuestionNotFoundError) {
+            return res.status(error.status).json({ error: error.message });
+        }
         logger.error({ error }, `Failed to generate question ${req.params.id}`);
         res.status(500).json({ error: "Failed to generate question" });
     }
