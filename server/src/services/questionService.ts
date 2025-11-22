@@ -21,7 +21,7 @@ export async function getAllQuestions() {
 /**
  * Get a question by id.
  * @param id - Numeric question id
- * @returns Promise resolving to the question or undefined if not found
+ * @returns Promise resolving to the question
  */
 export async function getQuestionById(id: number) {
     const question = await questionRepository.getQuestionById(id);
@@ -34,6 +34,7 @@ export async function getQuestionById(id: number) {
 /**
  * Get a random question.
  * @returns Promise resolving to a single randomly selected question
+ * @throws {QuestionNotFoundError} When no question matches the provided ID
  */
 export async function getRandomQuestion() {
     const question = await questionRepository.getRandomQuestion();
