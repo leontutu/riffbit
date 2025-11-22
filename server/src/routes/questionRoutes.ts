@@ -17,31 +17,26 @@ export function registerQuestionRoutes(app: Application) {
      * Route: GET /api/questions
      * Fetches all questions.
      */
-    app.get(API_ENDPOINTS.QUESTIONS.ALL, async (req, res) => {
-        await questionController.getAllQuestions(req, res);
-    });
+    app.get(API_ENDPOINTS.QUESTIONS.ALL, questionController.getAllQuestions);
 
     /**
      * Route: GET /api/questions/random
      * Fetches a single random question.
      */
-    app.get(API_ENDPOINTS.QUESTIONS.RANDOM, async (req, res) => {
-        await questionController.getRandomQuestion(req, res);
-    });
+    app.get(API_ENDPOINTS.QUESTIONS.RANDOM, questionController.getRandomQuestion);
 
     /**
      * Route: GET /api/questions/random-categorized?categoryIds=:categoryIds
      * Fetches a single random question filtered by category IDs.
      */
-    app.get(API_ENDPOINTS.QUESTIONS.RANDOM_CATEGORIZED_TEMPLATE, async (req, res) => {
-        await questionController.getRandomQuestionWithCategories(req, res);
-    });
+    app.get(
+        API_ENDPOINTS.QUESTIONS.RANDOM_CATEGORIZED_TEMPLATE,
+        questionController.getRandomQuestionWithCategories
+    );
 
     /**
      * Route: GET /api/questions/:id
      * Fetches a single question by its ID.
      */
-    app.get(API_ENDPOINTS.QUESTIONS.BY_ID_TEMPLATE, async (req, res) => {
-        await questionController.getQuestionById(req, res);
-    });
+    app.get(API_ENDPOINTS.QUESTIONS.BY_ID_TEMPLATE, questionController.getQuestionById);
 }

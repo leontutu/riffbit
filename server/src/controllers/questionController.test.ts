@@ -14,6 +14,10 @@ function makeRes() {
     return { json, status } as unknown as any;
 }
 
+function makeNext() {
+    return vi.fn();
+}
+
 describe("questionController", () => {
     describe("getAllQuestions", () => {
         test("responds with questions", async () => {
@@ -22,37 +26,38 @@ describe("questionController", () => {
 
             const req = {} as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getAllQuestions(req, res);
+            await questionController.getAllQuestions(req, res, next);
 
             expect(res.json).toHaveBeenCalledWith(mockData);
+            expect(next).not.toHaveBeenCalled();
         });
     });
 
     describe("getQuestionById", () => {
-        test("returns 400 for invalid id", async () => {
+        test("passes ValidationError to next for invalid id", async () => {
             const req = { params: { id: "not-a-number" } } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getQuestionById(req, res);
+            await questionController.getQuestionById(req, res, next);
 
-            expect(res.status).toHaveBeenCalledWith(400);
-            expect(res.status().json).toHaveBeenCalled();
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
+            expect(next.mock.calls[0][0].message).toBe("Invalid question ID format");
         });
 
-        test("returns 404 when not found", async () => {
+        test("passes QuestionNotFoundError to next when not found", async () => {
             vi.spyOn(questionService, "getQuestionById").mockRejectedValue(
                 new QuestionNotFoundError(5)
             );
             const req = { params: { id: "5" } } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getQuestionById(req, res);
+            await questionController.getQuestionById(req, res, next);
 
-            expect(res.status).toHaveBeenCalledWith(404);
-            expect(res.status().json).toHaveBeenCalledWith({
-                error: 'Question with id "5" not found',
-            });
+            expect(next).toHaveBeenCalledWith(expect.any(QuestionNotFoundError));
         });
 
         test("returns question when found", async () => {
@@ -60,10 +65,12 @@ describe("questionController", () => {
             vi.spyOn(questionService, "getQuestionById").mockResolvedValue(mockData as any);
             const req = { params: { id: "3" } } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getQuestionById(req, res);
+            await questionController.getQuestionById(req, res, next);
 
             expect(res.json).toHaveBeenCalledWith(mockData);
+            expect(next).not.toHaveBeenCalled();
         });
     });
 
@@ -73,48 +80,49 @@ describe("questionController", () => {
             vi.spyOn(questionService, "getRandomQuestion").mockResolvedValue(mockData as any);
             const req = {} as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getRandomQuestion(req, res);
+            await questionController.getRandomQuestion(req, res, next);
 
             expect(res.json).toHaveBeenCalledWith(mockData);
+            expect(next).not.toHaveBeenCalled();
         });
     });
 
     describe("getRandomQuestionWithCategories", () => {
-        test("returns 400 when categoryIds query param is missing", async () => {
+        test("passes ValidationError to next when categoryIds query param is missing", async () => {
             const req = { query: {} } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getRandomQuestionWithCategories(req, res);
+            await questionController.getRandomQuestionWithCategories(req, res, next);
 
-            expect(res.status).toHaveBeenCalledWith(400);
-            expect(res.status().json).toHaveBeenCalledWith({
-                error: "categoryIds query parameter is required",
-            });
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
+            expect(next.mock.calls[0][0].message).toBe("categoryIds query parameter is required");
         });
 
-        test("returns 400 when categoryIds is not a string", async () => {
+        test("passes ValidationError to next when categoryIds is not a string", async () => {
             const req = { query: { categoryIds: 123 } } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getRandomQuestionWithCategories(req, res);
+            await questionController.getRandomQuestionWithCategories(req, res, next);
 
-            expect(res.status).toHaveBeenCalledWith(400);
-            expect(res.status().json).toHaveBeenCalledWith({
-                error: "categoryIds query parameter is required",
-            });
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
+            expect(next.mock.calls[0][0].message).toBe("categoryIds query parameter is required");
         });
 
-        test("returns 400 when no valid category IDs are provided", async () => {
+        test("passes ValidationError to next when no valid category IDs are provided", async () => {
             const req = { query: { categoryIds: "invalid,abc" } } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getRandomQuestionWithCategories(req, res);
+            await questionController.getRandomQuestionWithCategories(req, res, next);
 
-            expect(res.status).toHaveBeenCalledWith(400);
-            expect(res.status().json).toHaveBeenCalledWith({
-                error: "At least one valid category ID must be provided",
-            });
+            expect(next).toHaveBeenCalledWith(expect.any(Error));
+            expect(next.mock.calls[0][0].message).toBe(
+                "At least one valid category ID must be provided"
+            );
         });
 
         test("responds with a question when valid categoryIds are provided", async () => {
@@ -124,11 +132,13 @@ describe("questionController", () => {
             );
             const req = { query: { categoryIds: "1,2,3" } } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getRandomQuestionWithCategories(req, res);
+            await questionController.getRandomQuestionWithCategories(req, res, next);
 
             expect(questionService.getRandomQuestionWithCategories).toHaveBeenCalledWith([1, 2, 3]);
             expect(res.json).toHaveBeenCalledWith(mockData);
+            expect(next).not.toHaveBeenCalled();
         });
 
         test("filters out invalid IDs and processes valid ones", async () => {
@@ -138,11 +148,13 @@ describe("questionController", () => {
             );
             const req = { query: { categoryIds: "1,invalid,2,abc,3" } } as any;
             const res = makeRes();
+            const next = makeNext();
 
-            await questionController.getRandomQuestionWithCategories(req, res);
+            await questionController.getRandomQuestionWithCategories(req, res, next);
 
             expect(questionService.getRandomQuestionWithCategories).toHaveBeenCalledWith([1, 2, 3]);
             expect(res.json).toHaveBeenCalledWith(mockData);
+            expect(next).not.toHaveBeenCalled();
         });
     });
 });

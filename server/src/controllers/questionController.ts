@@ -1,7 +1,6 @@
-import { Request, Response } from "express";
-import QuestionNotFoundError from "src/errors/QuestionNotFoundError";
-import logger from "src/utils/logger";
+import { NextFunction, Request, Response } from "express";
 
+import ValidationError from "../errors/ValidationError";
 import * as questionService from "../services/questionService";
 
 /**
@@ -13,15 +12,15 @@ import * as questionService from "../services/questionService";
  * Fetch and return all questions.
  * @param req - Express request object
  * @param res - Express response object
+ * @param next - Express next function for error handling
  * @returns Promise that resolves when the response is sent
  */
-export async function getAllQuestions(req: Request, res: Response) {
+export async function getAllQuestions(req: Request, res: Response, next: NextFunction) {
     try {
         const questions = await questionService.getAllQuestions();
         res.json(questions);
     } catch (error) {
-        logger.error({ error }, "Failed to fetch all questions");
-        res.status(500).json({ error: "Failed to retrieve questions" });
+        next(error);
     }
 }
 
@@ -29,22 +28,19 @@ export async function getAllQuestions(req: Request, res: Response) {
  * Fetch a specific question by ID from route params.
  * @param req - Express request object
  * @param res - Express response object
+ * @param next - Express next function for error handling
  * @returns Promise that resolves when the response is sent
  */
-export async function getQuestionById(req: Request, res: Response) {
+export async function getQuestionById(req: Request, res: Response, next: NextFunction) {
     try {
         const id = parseInt(req.params.id, 10);
         if (isNaN(id)) {
-            return res.status(400).json({ error: "Invalid question ID format" });
+            throw new ValidationError("Invalid question ID format", "id");
         }
         const question = await questionService.getQuestionById(id);
         res.json(question);
     } catch (error) {
-        if (error instanceof QuestionNotFoundError) {
-            return res.status(error.status).json({ error: error.message });
-        }
-        logger.error({ error }, `Failed to fetch question with ID ${req.params.id}`);
-        res.status(500).json({ error: "Failed to fetch question" });
+        next(error);
     }
 }
 
@@ -52,15 +48,15 @@ export async function getQuestionById(req: Request, res: Response) {
  * Fetch and return a single randomly selected question.
  * @param req - Express request object
  * @param res - Express response object
+ * @param next - Express next function for error handling
  * @returns Promise that resolves when the response is sent
  */
-export async function getRandomQuestion(req: Request, res: Response) {
+export async function getRandomQuestion(req: Request, res: Response, next: NextFunction) {
     try {
         const question = await questionService.getRandomQuestion();
         res.json(question);
     } catch (error) {
-        logger.error({ error }, "Failed to fetch random question");
-        res.status(500).json({ error: "Failed to fetch random question" });
+        next(error);
     }
 }
 
@@ -69,13 +65,18 @@ export async function getRandomQuestion(req: Request, res: Response) {
  * Fetch and return a single randomly selected question filtered by category IDs.
  * @param req - Express request object
  * @param res - Express response object
+ * @param next - Express next function for error handling
  * @returns Promise that resolves when the response is sent
  */
-export async function getRandomQuestionWithCategories(req: Request, res: Response) {
+export async function getRandomQuestionWithCategories(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
     try {
         const categoryIdsParam = req.query.categoryIds;
         if (!categoryIdsParam || typeof categoryIdsParam !== "string") {
-            return res.status(400).json({ error: "categoryIds query parameter is required" });
+            throw new ValidationError("categoryIds query parameter is required", "categoryIds");
         }
         const categoryIds = categoryIdsParam
             .split(",")
@@ -83,14 +84,14 @@ export async function getRandomQuestionWithCategories(req: Request, res: Respons
             .filter(id => !isNaN(id));
 
         if (categoryIds.length === 0) {
-            return res
-                .status(400)
-                .json({ error: "At least one valid category ID must be provided" });
+            throw new ValidationError(
+                "At least one valid category ID must be provided",
+                "categoryIds"
+            );
         }
         const question = await questionService.getRandomQuestionWithCategories(categoryIds);
         res.json(question);
     } catch (error) {
-        logger.error({ error }, "Failed to fetch random question with categories");
-        res.status(500).json({ error: "Failed to fetch random question with categories" });
+        next(error);
     }
 }
