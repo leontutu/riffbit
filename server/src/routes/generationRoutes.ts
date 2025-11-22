@@ -19,15 +19,17 @@ export function registerGenerationRoutes(app: Application) {
      * Route: POST /api/generation/similar/:id
      * Generates similar questions based on a given question ID.
      */
-    app.post(API_ENDPOINTS.GENERATION.SIMILAR_TEMPLATE, async (req, res) => {
-        generationController.generateSimilarQuestion(req, res);
-    });
+    app.post(
+        API_ENDPOINTS.GENERATION.SIMILAR_TEMPLATE,
+        generationController.generateSimilarQuestion
+    );
 
     /**
      * Route: POST /api/generation/followup/:id
      * Generates follow-up questions based on a given question ID.
      */
-    app.post(API_ENDPOINTS.GENERATION.FOLLOWUP_TEMPLATE, async (req, res) => {
-        generationController.generateFollowUpQuestion(req, res);
-    });
+    app.post(
+        API_ENDPOINTS.GENERATION.FOLLOWUP_TEMPLATE,
+        generationController.generateFollowUpQuestion
+    );
 }
