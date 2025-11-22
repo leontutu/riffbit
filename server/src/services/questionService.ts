@@ -1,3 +1,5 @@
+import QuestionNotFoundError from "src/errors/QuestionNotFoundError";
+
 import * as questionRepository from "../repositories/questionRepository";
 
 /**
@@ -23,6 +25,9 @@ export async function getAllQuestions() {
  */
 export async function getQuestionById(id: number) {
     const question = await questionRepository.getQuestionById(id);
+    if (!question) {
+        throw new QuestionNotFoundError(id);
+    }
     return question;
 }
 

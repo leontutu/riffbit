@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import QuestionNotFoundError from "src/errors/QuestionNotFoundError";
 import logger from "src/utils/logger";
 
 import * as questionService from "../services/questionService";
@@ -36,15 +37,12 @@ export async function getQuestionById(req: Request, res: Response) {
         if (isNaN(id)) {
             return res.status(400).json({ error: "Invalid question ID format" });
         }
-
         const question = await questionService.getQuestionById(id);
-
-        if (question) {
-            res.json(question);
-        } else {
-            res.status(404).json({ error: `Question with ID ${id} not found` });
-        }
+        res.json(question);
     } catch (error) {
+        if (error instanceof QuestionNotFoundError) {
+            return res.status(error.status).json({ error: error.message });
+        }
         logger.error({ error }, `Failed to fetch question with ID ${req.params.id}`);
         res.status(500).json({ error: "Failed to fetch question" });
     }
