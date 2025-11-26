@@ -17,8 +17,9 @@ module.exports = {
 
     overrides: [
         {
-            files: "*.yaml",
+            files: ["*.yaml", "*.yml"],
             options: {
+                parser: "yaml",
                 tabWidth: 2,
             },
         },

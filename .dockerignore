@@ -1,0 +1,24 @@
+## Docker specific
+.git
+server/Dockerfile
+
+### GLOBAL
+.github/copilot-instructions.md
+.vscode/
+notes/
+node_modules/
+
+### SERVER
+server/node_modules/
+server/.env
+server/dist/
+
+### CLIENT
+app/*
+
+# other
+/quickNotes.md
+/server/data/csv_edit.js
+/server/data/questions400.csv
+/server/data/questions800.csv
+/server/data/questions1200.csv
