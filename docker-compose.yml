@@ -7,3 +7,20 @@ services:
       - "3000:3000"
     env_file:
       - server/.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=riffbit
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# NEW: Define the storage volume
+volumes:
+  postgres_data:
