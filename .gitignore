@@ -1,6 +1,7 @@
 ### GLOBAL
 .github/copilot-instructions.md
 .vscode/
+.env
 notes/
 node_modules/
 

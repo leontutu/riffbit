@@ -8,6 +8,22 @@ on:
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://postgres:password@localhost:5432/riffbit_test
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: riffbit_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -27,6 +43,12 @@ jobs:
       - name: Check Formatting
         run: npm run format
 
+      - name: Push Schema to DB
+        working-directory: ./server
+        run: |
+          npx prisma db push
+          npx prisma db seed
+        # ^ TODO: Refactor tests to set up data independently of seed script.
       - name: Test Server
         working-directory: ./server
         run: npx vitest run --reporter=verbose
