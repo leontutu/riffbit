@@ -56,7 +56,7 @@ describe("Question API Routes", () => {
 
             expect(question.id).toBe(1);
             expect(question.text).toBe("What is the meaning of life?");
-            expect(question.categoryIds).toEqual([1, 5]);
+            expect(question.categoryIds).toEqual([1, 2]);
         });
 
         it("returns 404 when question does not exist", async () => {

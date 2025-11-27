@@ -1,14 +1,15 @@
 ### GLOBAL
 .github/copilot-instructions.md
 .vscode/
+.env
 notes/
 node_modules/
 
 ### SERVER
-# dependencies
 server/node_modules/
 server/.env
 server/dist/
+server/generated/prisma
 
 
 ### CLIENT
