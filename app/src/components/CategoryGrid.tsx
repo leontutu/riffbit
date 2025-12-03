@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { Category } from "@shared/constants/constants";
+import de from "app/src/locales/de";
 
 import CategoryGridItem from "./CategoryGridItem";
 
@@ -45,7 +46,7 @@ export default function CategoryGrid({ layoutStyle, toggles, setToggles }: Props
             {CATEGORY_LIST.map(category => (
                 <View key={category} style={styles.gridItem}>
                     <CategoryGridItem
-                        name={category}
+                        name={de.categories[category]}
                         color={CATEGORY_COLORS[category]}
                         toggled={toggles[category]}
                         setToggled={() => handleToggle(category)}
