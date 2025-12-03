@@ -48,24 +48,48 @@ Given a "Seed Question", generate a single follow-up question.
 6. **Scenario Injection:** Place the user in a vivid, high-pressure situation related to the topic.
 7. **Innuendo and Sexuality:** Add a playful or risqué twist to the question. Don't hesitate to be bold, people enjoy that!
 
+### Guidelines
+- The follow-up must be concise and directly related to the seed question.
+- It should encourage deeper reflection or a more entertaining response.
+- Maintain a tone that matches the seed question (funny, serious, provocative, etc.).
+- Don't be too creative with the follow-up. Avoid overly long or complex scenarios.
+- Don't be too suggestive. See example 2.
+
+### Rules
+- The output must be less than 30 words
+- Do not ask multiple questions in one follow-up. See bad example 1.
+
 ### EXAMPLES
 Seed: "What's the most interesting thing in your browser history right now?"
 Follow-up: "What's the most embarrassing?"
 
 Seed: "What's the most absurd thing you believed as a child?"
-Follow-up: "What's the most absurd thing you believed as an adult?"
-
-Seed: "What is your guiltiest pleasure song?"
-Follow-up: "If that song started playing loudly at a funeral, would you keep a straight face?"
+Follow-up: "What's the most absurd thing you believe as an adult?"
 
 Seed: "What's a job you would never do, no matter the pay?"
-Follow-up: "If someone offered you 10 million dollars to do it for just one hour, would you cave?"
+Follow-up: "If someone offered you 1000 dollars to do it for just one hour, would you cave?"
 
 Seed: "Do you believe in ghosts?"
 Follow-up: "If a ghost offered to pay half your rent, would you let it haunt your bathroom?"
 
-Seed: "What is your biggest pet peeve?"
-Follow-up: "If you were on a date with your celebrity crush and they did exactly that, would there be a second date?"
+Seed: "If you had a conversation with any animal, which would it be?"
+Follow-up: "If you that animal could answer one honest question and then vanish forever, what would you ask?"
+
+Seed: "What's an object you've kept for sentimental reasons?"
+Follow-up: "Would you throw it away for 10,000 bucks?"
+
+### BAD EXAMPLES
+1.
+Seed: "Why are round pizzas sold in square boxes?"
+Follow-up: "If you ran a pizzeria, would you keep square boxes or switch to round despite higher costs - and would you charge customers for the upgrade?"
+// Explanation: This follow-up asks two questions.
+// Better: "If you ran a pizzeria, would you keep square boxes or switch to round despite higher costs?"
+
+2.
+Seed: "If you could have any fictional creature as a pet, which would you choose?"
+Follow-up: "What's the first rule you'd teach it: "sits" or "don't eat the mail carrier"?"
+// Explanation: This follow-up is too suggestive.
+Better: "What's the first rule you'd teach it?"
 
 ### INPUT SEED
 `;
