@@ -20,21 +20,19 @@ The web is saturated with generic, static social question lists. RiffBit's visio
 
 ---
 
-## 🧩 Tech Stack Snapshot (tentative v0.1)
+## 🧩 Tech Stack Snapshot (v0.3)
 
 | 📱 Frontend | ⚙️ Backend | 🛠️ DevOps / Tooling |
 | :--- | :--- | :--- |
-| <ul><li>`React Native (Expo)`</li><li>`TypeScript`</li><li>`Jest` + `RNTL`</li></ul> | <ul><li>`Node.js` + `Express`</li><li>`TypeScript`</li><li>`Vitest`</li></ul> | <ul><li>`GitHub Actions` (CI)</li><li>`pino`</li><li>`ESLint` + `Prettier` + `Husky`</li><li>`npm workspaces`</li></ul> |
+| <ul><li>`React Native (Expo)`</li><li>`TypeScript`</li><li>`Jest` + `RNTL`</li></ul> | <ul><li>`Node.js` + `Express`</li><li>`TypeScript`</li><li>`Prisma`</li><li>`Vitest`</li></ul> | <ul><li>`GitHub Actions` (CI)</li><li>`pino`</li><li>`ESLint` + `Prettier` + `Husky`</li><li>`npm workspaces`</li><li>`postgres`</li><</ul> |
 
 ---
 
-## 📈 Development status: v0.2 ready 🥳 
-#### → Solving minor issues v0.2.1
+## 📈 Development status: v0.3 ready 🥳 
+#### → Working on v0.3.5
 
-> - Implement server error handling middleware
-> - Upgrade and integrate logo
-> - Write detailed issues for v0.3
-> - Improve Roadmap and Wireframes
+> - Design and implement i18n System
+> - Add German language support with translated questions and UI
 
 ---
 
@@ -45,10 +43,11 @@ The web is saturated with generic, static social question lists. RiffBit's visio
 | **v0.1** | MVP                 | Basic UI, random question API, CI setup                         |
 | **v0.2** | Tailored Experience | Categorized questions, filters                                  |
 | **v0.3** | Smart Discovery     | OpenAI API integration: "similar question", "generate question", "follow-up" |
-| **v0.4** | Social Features     | Shareable questions, user accounts, favorites, question occurence rates based on popularity  
-| **v0.5x** | Iteration          | Internal distribution, refining features and UI based on user feedback
-| **v0.6** | AI Personalization  | RAG, question retrieval and generation based on user preferences
-| **v0.7** | Polish & Expansion | Finalize UX, future-proof systems, clear backlog |
+| **v0.3.5**| Internalization    | Set up a system for i18n and add German language support        |
+| **v0.4** | Social Features     | Shareable questions, user accounts, favorites, question occurence rates based on popularity  |
+| **v0.5x**| Iteration           | Internal distribution, refining features and UI based on user feedback |
+| **v0.6** | AI Personalization  | RAG, question retrieval and generation based on user preferences |
+| **v0.7** | Polish & Expansion  | Finalize UX, future-proof systems, clear backlog |
 | **v1.0** | Production | Deploy Server on AWS, publish app in stores |
 
 **Notes**: 
@@ -74,6 +73,7 @@ The web is saturated with generic, static social question lists. RiffBit's visio
 -   Node.js ≥ 24.11.0
 -   npm (comes with Node.js)
 -   Expo CLI installed globally (`npm install -g expo-cli`)
+-   Docker
 
 ### Installation
 
@@ -87,7 +87,7 @@ npm install
 npm run test
 
 # Run Backend (Terminal 1)
-npm run dev:server
+docker compose up
 
 # Run App     (Terminal 2)
 npm run dev:app
